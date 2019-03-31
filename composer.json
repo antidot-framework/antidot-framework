@@ -1,0 +1,57 @@
+{
+    "name": "antidot/framework",
+    "description": "Anti.Framework library",
+    "keywords": [
+        "psr-7",
+        "psr-11",
+        "psr-15"
+    ],
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "kpicaza",
+            "email": "kpicaza.sound@gmail.com"
+        }
+    ],
+    "require": {
+        "php": "^7.2.13",
+        "aura/di": "^3.4",
+        "aura/router": "^3.1",
+        "symfony/console": "^4.2",
+        "symfony/polyfill-php73": "^1.11",
+        "zendframework/zend-config-aggregator": "^1.1",
+        "zendframework/zend-diactoros": "2.1",
+        "zendframework/zend-httphandlerrunner": "^1.1",
+        "psr/http-server-middleware": "^1.0"
+    },
+    "require-dev": {
+        "phpro/grumphp": "^0.15.0",
+        "phpstan/phpstan": "^0.11.5",
+        "phpunit/phpunit": "^8.0",
+        "squizlabs/php_codesniffer": "^3.4"
+    },
+    "autoload": {
+        "psr-4": {
+            "Antidot\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "AntidotTest\\": "test"
+        }
+    },
+    "scripts": {
+        "check": [
+            "@cs-check",
+            "@inspect"
+        ],
+        "cs-check": "phpcs src --colors",
+        "cs-fix": "phpcbf src --colors",
+        "inspect": "phpstan analyse src -l7 --ansi",
+        "test": "phpunit --colors=always"
+    },
+    "config": {
+        "sort-packages": true
+    }
+}
