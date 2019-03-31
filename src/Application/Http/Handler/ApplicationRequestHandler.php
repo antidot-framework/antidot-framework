@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Antidot\Application\Http\Handler;
 
+use Antidot\Application\Http\Middleware\Pipeline;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;

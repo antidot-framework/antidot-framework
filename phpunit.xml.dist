@@ -4,7 +4,7 @@
          bootstrap="vendor/autoload.php"
          colors="true">
     <testsuites>
-        <testsuite name="App\\Tests">
+        <testsuite name="Antidot\\Tests">
             <directory>./test</directory>
         </testsuite>
     </testsuites>
