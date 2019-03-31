@@ -4,13 +4,13 @@ declare(strict_types=1);
 
 namespace Antidot\Application\Http;
 
-use Antidot\Application\Http\Handler\CallableRequestHandler;
 use Antidot\Application\Http\Middleware\Pipeline;
 use Antidot\Container\MiddlewareFactory;
-use Aura\Router\RouterContainer;
+use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ServerRequestInterface;
-use Psr\Http\Server\RequestHandlerInterface;
 use Zend\Diactoros\ServerRequestFactory;
+use Zend\Expressive\Router\Route;
+use Zend\Expressive\Router\RouterInterface;
 use Zend\HttpHandlerRunner\Emitter\EmitterStack;
 use Zend\HttpHandlerRunner\RequestHandlerRunner;
 
@@ -27,7 +27,7 @@ final class Application
         ServerRequestErrorResponseGenerator $serverRequestErrorResponseGenerator,
         MiddlewareFactory $middlewareFactory,
         Pipeline $pipeline,
-        RouterContainer $router
+        RouterInterface $router
     ) {
         $this->emitterStack = $emitterStack;
         $this->serverRequestErrorResponseGenerator = $serverRequestErrorResponseGenerator;
@@ -38,13 +38,17 @@ final class Application
 
     public function run(): void
     {
-        $request = $this->getRequest();
-
         $runner = new RequestHandlerRunner(
             $this->pipeline,
             $this->emitterStack,
-            static function () use ($request) {
-                return $request;
+            static function (): RequestInterface {
+                return ServerRequestFactory::fromGlobals(
+                    $_SERVER,
+                    $_GET,
+                    $_POST,
+                    $_COOKIE,
+                    $_FILES
+                );
             },
             $this->serverRequestErrorResponseGenerator
         );
@@ -58,70 +62,43 @@ final class Application
 
     public function get(string $uri, array $middleware, string $name): void
     {
-        $map = $this->router->getMap();
-        $handler = $this->getHandler($middleware);
-
-        $map->get($name, $uri, $handler);
+        $this->router->addRoute(
+            new Route($uri, $this->middlewareFactory->create($middleware), ['GET'], $name)
+        );
     }
 
     public function post(string $uri, array $middleware, string $name): void
     {
-        $map = $this->router->getMap();
-        $handler = $this->getHandler($middleware);
-
-        $map->post($name, $uri, $handler);
+        $this->router->addRoute(
+            new Route($uri, $this->middlewareFactory->create($middleware), ['POST'], $name)
+        );
     }
 
     public function patch(string $uri, array $middleware, string $name): void
     {
-        $map = $this->router->getMap();
-        $handler = $this->getHandler($middleware);
-
-        $map->patch($name, $uri, $handler);
+        $this->router->addRoute(
+            new Route($uri, $this->middlewareFactory->create($middleware), ['PATCH'], $name)
+        );
     }
 
     public function put(string $uri, array $middleware, string $name): void
     {
-        $map = $this->router->getMap();
-        $handler = $this->getHandler($middleware);
-
-        $map->put($name, $uri, $handler);
+        $this->router->addRoute(
+            new Route($uri, $this->middlewareFactory->create($middleware), ['PUT'], $name)
+        );
     }
 
     public function delete(string $uri, array $middleware, string $name): void
     {
-        $map = $this->router->getMap();
-        $handler = $this->getHandler($middleware);
-
-        $map->delete($name, $uri, $handler);
+        $this->router->addRoute(
+            new Route($uri, $this->middlewareFactory->create($middleware), ['DELETE'], $name)
+        );
     }
 
     public function options(string $uri, array $middleware, string $name): void
     {
-        $map = $this->router->getMap();
-        $handler = $this->getHandler($middleware);
-
-        $map->options($name, $uri, $handler);
-    }
-
-    private function getRequest(): ServerRequestInterface
-    {
-        return ServerRequestFactory::fromGlobals(
-            $_SERVER,
-            $_GET,
-            $_POST,
-            $_COOKIE,
-            $_FILES
+        $this->router->addRoute(
+            new Route($uri, $this->middlewareFactory->create($middleware), ['OPTIONS'], $name)
         );
-    }
-
-    private function getHandler(array $pipe): RequestHandlerInterface
-    {
-        $handler = \array_pop($pipe);
-        foreach ($pipe as $middleware) {
-            $this->pipeline->pipe($middleware);
-        }
-
-        return \is_callable($handler) ? new CallableRequestHandler($handler) : $handler;
     }
 }

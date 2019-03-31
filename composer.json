@@ -7,7 +7,7 @@
         "psr-15"
     ],
     "type": "library",
-    "license": "MIT",
+    "license": "BSD-2.0",
     "authors": [
         {
             "name": "kpicaza",
@@ -18,12 +18,14 @@
         "php": "^7.2.13",
         "aura/di": "^3.4",
         "aura/router": "^3.1",
+        "psr/http-server-middleware": "^1.0",
         "symfony/console": "^4.2",
         "symfony/polyfill-php73": "^1.11",
+        "zendframework/zend-config": "^3.2",
         "zendframework/zend-config-aggregator": "^1.1",
         "zendframework/zend-diactoros": "2.1",
-        "zendframework/zend-httphandlerrunner": "^1.1",
-        "psr/http-server-middleware": "^1.0"
+        "zendframework/zend-expressive-aurarouter": "^3.0",
+        "zendframework/zend-httphandlerrunner": "^1.1"
     },
     "require-dev": {
         "phpro/grumphp": "^0.15.0",
@@ -53,5 +55,10 @@
     },
     "config": {
         "sort-packages": true
+    },
+    "extra": {
+        "zf": {
+            "config-provider": "Antidot\\Container\\Config\\ConfigProvider"
+        }
     }
 }

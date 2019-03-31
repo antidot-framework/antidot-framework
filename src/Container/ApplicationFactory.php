@@ -7,8 +7,8 @@ namespace Antidot\Container;
 use Antidot\Application\Http\Application;
 use Antidot\Application\Http\Middleware\MiddlewarePipeline;
 use Antidot\Application\Http\ServerRequestErrorResponseGenerator;
-use Aura\Router\RouterContainer;
 use Psr\Container\ContainerInterface;
+use Zend\Expressive\Router\RouterInterface;
 use Zend\HttpHandlerRunner\Emitter\EmitterStack;
 
 final class ApplicationFactory
@@ -20,7 +20,7 @@ final class ApplicationFactory
             $container->get(ServerRequestErrorResponseGenerator::class),
             new MiddlewareFactory($container),
             new MiddlewarePipeline(),
-            $container->get(RouterContainer::class)
+            $container->get(RouterInterface::class)
         );
     }
 }
