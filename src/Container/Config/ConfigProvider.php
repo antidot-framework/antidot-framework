@@ -8,7 +8,7 @@ use Antidot\Application\Cli\Command\ShowContainer;
 use Antidot\Application\Http\Application;
 use Antidot\Application\Http\Middleware\RouteDispatcherMiddleware;
 use Antidot\Application\Http\Middleware\RouteNotFoundMiddleware;
-use Antidot\Application\Http\ServerRequestErrorResponseGenerator;
+use Antidot\Application\Http\Response\ErrorResponseGenerator;
 use Antidot\Container\ApplicationFactory;
 use Antidot\Container\EmitterFactory;
 use Antidot\Container\ResponseFactory;
@@ -43,7 +43,7 @@ class ConfigProvider
                 'factories' => [
                     Application::class => ApplicationFactory::class,
                     EmitterStack::class => EmitterFactory::class,
-                    ServerRequestErrorResponseGenerator::class => ServerRequestErrorResponseGeneratorFactory::class,
+                    ErrorResponseGenerator::class => ServerRequestErrorResponseGeneratorFactory::class,
                     StreamInterface::class => StreamFactory::class,
                     ResponseInterface::class => ResponseFactory::class,
                 ],

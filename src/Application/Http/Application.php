@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace Antidot\Application\Http;
 
 use Antidot\Application\Http\Middleware\Pipeline;
+use Antidot\Application\Http\Response\ErrorResponseGenerator;
 use Antidot\Container\MiddlewareFactory;
 use Psr\Http\Message\RequestInterface;
-use Psr\Http\Message\ServerRequestInterface;
 use Zend\Diactoros\ServerRequestFactory;
 use Zend\Expressive\Router\Route;
 use Zend\Expressive\Router\RouterInterface;
@@ -17,20 +17,20 @@ use Zend\HttpHandlerRunner\RequestHandlerRunner;
 final class Application
 {
     private $emitterStack;
-    private $serverRequestErrorResponseGenerator;
+    private $errorResponseGenerator;
     private $middlewareFactory;
     private $pipeline;
     private $router;
 
     public function __construct(
         EmitterStack $emitterStack,
-        ServerRequestErrorResponseGenerator $serverRequestErrorResponseGenerator,
+        ErrorResponseGenerator $errorResponseGenerator,
         MiddlewareFactory $middlewareFactory,
         Pipeline $pipeline,
         RouterInterface $router
     ) {
         $this->emitterStack = $emitterStack;
-        $this->serverRequestErrorResponseGenerator = $serverRequestErrorResponseGenerator;
+        $this->errorResponseGenerator = $errorResponseGenerator;
         $this->middlewareFactory = $middlewareFactory;
         $this->pipeline = $pipeline;
         $this->router = $router;
@@ -50,7 +50,7 @@ final class Application
                     $_FILES
                 );
             },
-            $this->serverRequestErrorResponseGenerator
+            $this->errorResponseGenerator
         );
         $runner->run();
     }
@@ -62,43 +62,38 @@ final class Application
 
     public function get(string $uri, array $middleware, string $name): void
     {
+        $this->route('GET', $uri, $name, $middleware);
+    }
+
+    private function route(string $method, string $uri, string $name, array $middleware): void
+    {
         $this->router->addRoute(
-            new Route($uri, $this->middlewareFactory->create($middleware), ['GET'], $name)
+            new Route($uri, $this->middlewareFactory->create($middleware), [$method], $name)
         );
     }
 
     public function post(string $uri, array $middleware, string $name): void
     {
-        $this->router->addRoute(
-            new Route($uri, $this->middlewareFactory->create($middleware), ['POST'], $name)
-        );
+        $this->route('POST', $uri, $name, $middleware);
     }
 
     public function patch(string $uri, array $middleware, string $name): void
     {
-        $this->router->addRoute(
-            new Route($uri, $this->middlewareFactory->create($middleware), ['PATCH'], $name)
-        );
+        $this->route('PATCH', $uri, $name, $middleware);
     }
 
     public function put(string $uri, array $middleware, string $name): void
     {
-        $this->router->addRoute(
-            new Route($uri, $this->middlewareFactory->create($middleware), ['PUT'], $name)
-        );
+        $this->route('PUT', $uri, $name, $middleware);
     }
 
     public function delete(string $uri, array $middleware, string $name): void
     {
-        $this->router->addRoute(
-            new Route($uri, $this->middlewareFactory->create($middleware), ['DELETE'], $name)
-        );
+        $this->route('DELETE', $uri, $name, $middleware);
     }
 
     public function options(string $uri, array $middleware, string $name): void
     {
-        $this->router->addRoute(
-            new Route($uri, $this->middlewareFactory->create($middleware), ['OPTIONS'], $name)
-        );
+        $this->route('OPTIONS', $uri, $name, $middleware);
     }
 }

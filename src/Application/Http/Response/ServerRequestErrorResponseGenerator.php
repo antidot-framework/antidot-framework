@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace Antidot\Application\Http;
+namespace Antidot\Application\Http\Response;
 
 use Psr\Http\Message\ResponseInterface;
 use Throwable;
 
-final class ServerRequestErrorResponseGenerator
+final class ServerRequestErrorResponseGenerator implements ErrorResponseGenerator
 {
     public const TEMPLATE_DEFAULT = 'error::error';
     private $responseFactory;
