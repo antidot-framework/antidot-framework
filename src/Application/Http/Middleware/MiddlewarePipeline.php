@@ -14,9 +14,9 @@ final class MiddlewarePipeline implements Pipeline
 {
     private $middlewareCollection;
 
-    public function __construct()
+    public function __construct(SplQueue $middlewareCollection)
     {
-        $this->middlewareCollection = new SplQueue();
+        $this->middlewareCollection = $middlewareCollection;
     }
 
     public function pipe(MiddlewareInterface $middleware): void

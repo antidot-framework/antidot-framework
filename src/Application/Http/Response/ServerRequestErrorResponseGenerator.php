@@ -9,20 +9,17 @@ use Throwable;
 
 final class ServerRequestErrorResponseGenerator implements ErrorResponseGenerator
 {
-    public const TEMPLATE_DEFAULT = 'error::error';
     private $responseFactory;
     private $debug;
     private $stackTraceTemplate = <<< 'EOT'
-%s raised in file %s line %d:
+Exception %s was thrown in file %s in line %d:
 Message: %s
 Stack Trace:
 %s
 EOT;
 
-    public function __construct(
-        callable $responseFactory,
-        bool $isDevelopmentMode = false
-    ) {
+    public function __construct(callable $responseFactory, bool $isDevelopmentMode = false)
+    {
         $this->responseFactory = static function () use ($responseFactory) : ResponseInterface {
             return $responseFactory();
         };
@@ -37,11 +34,8 @@ EOT;
         return $this->prepareDefaultResponse($e, $this->debug, $response);
     }
 
-    private function prepareDefaultResponse(
-        Throwable $e,
-        bool $debug,
-        ResponseInterface $response
-    ): ResponseInterface {
+    private function prepareDefaultResponse(Throwable $e, bool $debug, ResponseInterface $response): ResponseInterface
+    {
         $message = 'An unexpected error occurred';
         if ($debug) {
             $message .= "; stack trace:\n\n".$this->prepareStackTrace($e);
@@ -55,9 +49,9 @@ EOT;
     {
         $message = '';
         do {
-            $message .= sprintf(
+            $message .= \sprintf(
                 $this->stackTraceTemplate,
-                get_class($e),
+                \get_class($e),
                 $e->getFile(),
                 $e->getLine(),
                 $e->getMessage(),

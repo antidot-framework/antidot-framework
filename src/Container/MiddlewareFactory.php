@@ -10,6 +10,7 @@ use Antidot\Application\Http\Middleware\MiddlewarePipeline;
 use InvalidArgumentException;
 use Psr\Container\ContainerInterface;
 use Psr\Http\Server\MiddlewareInterface;
+use SplQueue;
 
 final class MiddlewareFactory
 {
@@ -55,7 +56,7 @@ final class MiddlewareFactory
 
     private function pipelineMiddleware(array $middlewareNames): MiddlewareInterface
     {
-        $pipeline = new MiddlewarePipeline();
+        $pipeline = new MiddlewarePipeline(new SplQueue());
         /** @var string $middlewareName */
         foreach ($middlewareNames as $middlewareName) {
             $pipeline->pipe($this->create($middlewareName));
