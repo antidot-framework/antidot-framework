@@ -6,3 +6,13 @@ parameters:
             script: check
             triggered_by: [php, phtml]
             working_directory: ~
+    ascii:
+        failed:
+            - grumphp-grumpy.txt
+            - grumphp/symfony-troll.txt
+            - grumphp/homer.txt
+            - grumphp/sparky.txt
+            - grumphp/bomb.txt
+        succeeded:
+            - grumphp-happy.txt
+            - grumphp/rock.txt
