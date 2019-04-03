@@ -5,53 +5,32 @@ declare(strict_types=1);
 namespace Antidot\Application\Http;
 
 use Antidot\Application\Http\Middleware\Pipeline;
-use Antidot\Application\Http\Response\ErrorResponseGenerator;
 use Antidot\Container\MiddlewareFactory;
 use Antidot\Infrastructure\Aura\Router\AuraRoute;
-use Psr\Http\Message\RequestInterface;
-use Zend\Diactoros\ServerRequestFactory;
-use Zend\HttpHandlerRunner\Emitter\EmitterStack;
 use Zend\HttpHandlerRunner\RequestHandlerRunner;
 
 final class Application
 {
-    private $emitterStack;
-    private $errorResponseGenerator;
-    private $middlewareFactory;
     private $pipeline;
     private $router;
+    private $runner;
+    private $middlewareFactory;
 
     public function __construct(
-        EmitterStack $emitterStack,
-        ErrorResponseGenerator $errorResponseGenerator,
-        MiddlewareFactory $middlewareFactory,
+        RequestHandlerRunner $runner,
         Pipeline $pipeline,
-        Router $router
+        Router $router,
+        MiddlewareFactory $middlewareFactory
     ) {
-        $this->emitterStack = $emitterStack;
-        $this->errorResponseGenerator = $errorResponseGenerator;
-        $this->middlewareFactory = $middlewareFactory;
+        $this->runner = $runner;
         $this->pipeline = $pipeline;
         $this->router = $router;
+        $this->middlewareFactory = $middlewareFactory;
     }
 
     public function run(): void
     {
-        $runner = new RequestHandlerRunner(
-            $this->pipeline,
-            $this->emitterStack,
-            static function (): RequestInterface {
-                return ServerRequestFactory::fromGlobals(
-                    $_SERVER,
-                    $_GET,
-                    $_POST,
-                    $_COOKIE,
-                    $_FILES
-                );
-            },
-            $this->errorResponseGenerator
-        );
-        $runner->run();
+        $this->runner->run();
     }
 
     public function pipe(string $middlewareName): void
@@ -62,13 +41,6 @@ final class Application
     public function get(string $uri, array $middleware, string $name): void
     {
         $this->route('GET', $uri, $name, $middleware);
-    }
-
-    private function route(string $method, string $uri, string $name, array $middleware): void
-    {
-        $this->router->append(
-            new AuraRoute([$method], $name, $uri, $middleware)
-        );
     }
 
     public function post(string $uri, array $middleware, string $name): void
@@ -94,5 +66,12 @@ final class Application
     public function options(string $uri, array $middleware, string $name): void
     {
         $this->route('OPTIONS', $uri, $name, $middleware);
+    }
+
+    private function route(string $method, string $uri, string $name, array $middleware): void
+    {
+        $this->router->append(
+            new AuraRoute([$method], $name, $uri, $middleware)
+        );
     }
 }

@@ -46,6 +46,7 @@
     "scripts": {
         "check": [
             "@cs-check",
+            "@test",
             "@inspect"
         ],
         "cs-check": "phpcs src --colors",

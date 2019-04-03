@@ -7,20 +7,17 @@ namespace AntidotTest\Application\Http;
 use Antidot\Application\Http\Application;
 use Antidot\Application\Http\Middleware\LazyLoadingMiddleware;
 use Antidot\Application\Http\Middleware\Pipeline;
-use Antidot\Application\Http\Response\ErrorResponseGenerator;
 use Antidot\Application\Http\Route;
 use Antidot\Application\Http\Router;
 use Antidot\Container\MiddlewareFactory;
 use PHPUnit\Framework\TestCase;
 use Psr\Container\ContainerInterface;
-use Zend\HttpHandlerRunner\Emitter\EmitterStack;
+use Zend\HttpHandlerRunner\RequestHandlerRunner;
 
 class ApplicationTest extends TestCase
 {
-    /** @var EmitterStack|\PHPUnit\Framework\MockObject\MockObject */
-    private $emitterStack;
-    /** @var ErrorResponseGenerator|\PHPUnit\Framework\MockObject\MockObject */
-    private $errorResponseGenerator;
+    /** @var RequestHandlerRunner|\PHPUnit\Framework\MockObject\MockObject */
+    private $runner;
     /** @var MiddlewareFactory */
     private $middlewareFactory;
     /** @var Pipeline|\PHPUnit\Framework\MockObject\MockObject */
@@ -36,8 +33,7 @@ class ApplicationTest extends TestCase
 
     public function testItShouldBeConstructedHavingNeededDependencies(): void
     {
-        $this->givenEmitterStack();
-        $this->givenServerRequestErrorResponseGenerator();
+        $this->givenRequestHandlerRunner();
         $this->givenMiddlewareFactory();
         $this->givenPipeline();
         $this->givenRouter();
@@ -108,14 +104,9 @@ class ApplicationTest extends TestCase
         $this->thenApplicationShouldBeCreated();
     }
 
-    private function givenEmitterStack(): void
+    private function givenRequestHandlerRunner(): void
     {
-        $this->emitterStack = $this->createMock(EmitterStack::class);
-    }
-
-    private function givenServerRequestErrorResponseGenerator(): void
-    {
-        $this->errorResponseGenerator = $this->createMock(ErrorResponseGenerator::class);
+        $this->runner = $this->createMock(RequestHandlerRunner::class);
     }
 
     private function givenMiddlewareFactory(): void
@@ -137,11 +128,10 @@ class ApplicationTest extends TestCase
     private function whenApplicationConstructorIsCalled(): void
     {
         $this->app = new Application(
-            $this->emitterStack,
-            $this->errorResponseGenerator,
-            $this->middlewareFactory,
+            $this->runner,
             $this->pipeline,
-            $this->router
+            $this->router,
+            $this->middlewareFactory
         );
     }
 
@@ -152,8 +142,7 @@ class ApplicationTest extends TestCase
 
     private function havingAnApplication(): void
     {
-        $this->givenEmitterStack();
-        $this->givenServerRequestErrorResponseGenerator();
+        $this->givenRequestHandlerRunner();
         $this->givenMiddlewareFactory();
         $this->givenPipeline();
         $this->givenRouter();
