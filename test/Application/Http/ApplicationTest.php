@@ -8,11 +8,11 @@ use Antidot\Application\Http\Application;
 use Antidot\Application\Http\Middleware\LazyLoadingMiddleware;
 use Antidot\Application\Http\Middleware\Pipeline;
 use Antidot\Application\Http\Response\ErrorResponseGenerator;
+use Antidot\Application\Http\Route;
+use Antidot\Application\Http\Router;
 use Antidot\Container\MiddlewareFactory;
 use PHPUnit\Framework\TestCase;
 use Psr\Container\ContainerInterface;
-use Zend\Expressive\Router\Route;
-use Zend\Expressive\Router\RouterInterface;
 use Zend\HttpHandlerRunner\Emitter\EmitterStack;
 
 class ApplicationTest extends TestCase
@@ -25,7 +25,7 @@ class ApplicationTest extends TestCase
     private $middlewareFactory;
     /** @var Pipeline|\PHPUnit\Framework\MockObject\MockObject */
     private $pipeline;
-    /** @var RouterInterface|\PHPUnit\Framework\MockObject\MockObject */
+    /** @var Router|\PHPUnit\Framework\MockObject\MockObject */
     private $router;
     /** @var Application */
     private $app;
@@ -131,7 +131,7 @@ class ApplicationTest extends TestCase
 
     private function givenRouter(): void
     {
-        $this->router = $this->createMock(RouterInterface::class);
+        $this->router = $this->createMock(Router::class);
     }
 
     private function whenApplicationConstructorIsCalled(): void
@@ -178,7 +178,7 @@ class ApplicationTest extends TestCase
     {
         $this->router
             ->expects($this->once())
-            ->method('addRoute')
+            ->method('append')
             ->with($this->isInstanceOf(Route::class));
         $this->app->get($this->routeData[0], $this->routeData[1], $this->routeData[2]);
     }
@@ -187,7 +187,7 @@ class ApplicationTest extends TestCase
     {
         $this->router
             ->expects($this->once())
-            ->method('addRoute')
+            ->method('append')
             ->with($this->isInstanceOf(Route::class));
         $this->app->post($this->routeData[0], $this->routeData[1], $this->routeData[2]);
     }
@@ -196,7 +196,7 @@ class ApplicationTest extends TestCase
     {
         $this->router
             ->expects($this->once())
-            ->method('addRoute')
+            ->method('append')
             ->with($this->isInstanceOf(Route::class));
         $this->app->put($this->routeData[0], $this->routeData[1], $this->routeData[2]);
     }
@@ -205,7 +205,7 @@ class ApplicationTest extends TestCase
     {
         $this->router
             ->expects($this->once())
-            ->method('addRoute')
+            ->method('append')
             ->with($this->isInstanceOf(Route::class));
         $this->app->patch($this->routeData[0], $this->routeData[1], $this->routeData[2]);
     }
@@ -214,7 +214,7 @@ class ApplicationTest extends TestCase
     {
         $this->router
             ->expects($this->once())
-            ->method('addRoute')
+            ->method('append')
             ->with($this->isInstanceOf(Route::class));
         $this->app->delete($this->routeData[0], $this->routeData[1], $this->routeData[2]);
     }
@@ -223,7 +223,7 @@ class ApplicationTest extends TestCase
     {
         $this->router
             ->expects($this->once())
-            ->method('addRoute')
+            ->method('append')
             ->with($this->isInstanceOf(Route::class));
         $this->app->options($this->routeData[0], $this->routeData[1], $this->routeData[2]);
     }

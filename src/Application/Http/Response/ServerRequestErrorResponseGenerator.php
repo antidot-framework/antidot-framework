@@ -12,8 +12,7 @@ final class ServerRequestErrorResponseGenerator implements ErrorResponseGenerato
     private $responseFactory;
     private $debug;
     private $stackTraceTemplate = <<< 'EOT'
-Exception %s was thrown in file %s in line %d:
-Message: %s
+Error %s occurred in file %s in line %d with message: %s. 
 Stack Trace:
 %s
 EOT;

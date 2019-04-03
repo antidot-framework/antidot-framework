@@ -7,10 +7,9 @@ namespace Antidot\Application\Http;
 use Antidot\Application\Http\Middleware\Pipeline;
 use Antidot\Application\Http\Response\ErrorResponseGenerator;
 use Antidot\Container\MiddlewareFactory;
+use Antidot\Infrastructure\Aura\Router\AuraRoute;
 use Psr\Http\Message\RequestInterface;
 use Zend\Diactoros\ServerRequestFactory;
-use Zend\Expressive\Router\Route;
-use Zend\Expressive\Router\RouterInterface;
 use Zend\HttpHandlerRunner\Emitter\EmitterStack;
 use Zend\HttpHandlerRunner\RequestHandlerRunner;
 
@@ -27,7 +26,7 @@ final class Application
         ErrorResponseGenerator $errorResponseGenerator,
         MiddlewareFactory $middlewareFactory,
         Pipeline $pipeline,
-        RouterInterface $router
+        Router $router
     ) {
         $this->emitterStack = $emitterStack;
         $this->errorResponseGenerator = $errorResponseGenerator;
@@ -67,8 +66,8 @@ final class Application
 
     private function route(string $method, string $uri, string $name, array $middleware): void
     {
-        $this->router->addRoute(
-            new Route($uri, $this->middlewareFactory->create($middleware), [$method], $name)
+        $this->router->append(
+            new AuraRoute([$method], $name, $uri, $middleware)
         );
     }
 

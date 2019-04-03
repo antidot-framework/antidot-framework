@@ -7,9 +7,9 @@ namespace Antidot\Container;
 use Antidot\Application\Http\Application;
 use Antidot\Application\Http\Middleware\MiddlewarePipeline;
 use Antidot\Application\Http\Response\ErrorResponseGenerator;
+use Antidot\Application\Http\Router;
 use Psr\Container\ContainerInterface;
 use SplQueue;
-use Zend\Expressive\Router\RouterInterface;
 use Zend\HttpHandlerRunner\Emitter\EmitterStack;
 
 final class ApplicationFactory
@@ -19,9 +19,9 @@ final class ApplicationFactory
         return new Application(
             $container->get(EmitterStack::class),
             $container->get(ErrorResponseGenerator::class),
-            new MiddlewareFactory($container),
+            $container->get(MiddlewareFactory::class),
             new MiddlewarePipeline(new SplQueue()),
-            $container->get(RouterInterface::class)
+            $container->get(Router::class)
         );
     }
 }
