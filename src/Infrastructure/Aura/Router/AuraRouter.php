@@ -6,7 +6,7 @@ namespace Antidot\Infrastructure\Aura\Router;
 
 use Antidot\Application\Http\Middleware\CallableMiddleware;
 use Antidot\Application\Http\Middleware\MiddlewarePipeline;
-use Antidot\Application\Http\Middleware\PipedRoute;
+use Antidot\Application\Http\Middleware\PipedRouteMiddleware;
 use Antidot\Application\Http\Route;
 use Antidot\Application\Http\Router;
 use Antidot\Container\MiddlewareFactory;
@@ -49,15 +49,15 @@ class AuraRouter implements Router
         $this->routeContainer->getMap()->addRoute($baseRoute);
     }
 
-    public function match(ServerRequestInterface $request): PipedRoute
+    public function match(ServerRequestInterface $request): PipedRouteMiddleware
     {
         $route = $this->routeContainer->getMatcher()->match($request);
         if (false === $route) {
-            return new PipedRoute(new MiddlewarePipeline(new SplQueue()), true);
+            return new PipedRouteMiddleware(new MiddlewarePipeline(new SplQueue()), true);
         }
         $pipeline = $this->getPipeline($route);
 
-        return new PipedRoute($pipeline, false);
+        return new PipedRouteMiddleware($pipeline, false);
     }
 
     private function getPipeline(BaseRoute $route): MiddlewarePipeline

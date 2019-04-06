@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace AntidotTest\Application\Http\Middleware;
 
-use Antidot\Application\Http\Middleware\PipedRoute;
+use Antidot\Application\Http\Middleware\PipedRouteMiddleware;
 use Antidot\Application\Http\Middleware\RouteDispatcherMiddleware;
 use Antidot\Application\Http\Router;
 use PHPUnit\Framework\TestCase;
@@ -60,7 +60,7 @@ class RouteDispatcherMiddlewareTest extends TestCase
 
     private function whenRouteExist(): void
     {
-        $route = $this->createMock(PipedRoute::class);
+        $route = $this->createMock(PipedRouteMiddleware::class);
         $route
             ->expects($this->once())
             ->method('isFail')
@@ -88,7 +88,7 @@ class RouteDispatcherMiddlewareTest extends TestCase
 
     private function whenRouteDoesNotExist(): void
     {
-        $route = $this->createMock(PipedRoute::class);
+        $route = $this->createMock(PipedRouteMiddleware::class);
         $route
             ->expects($this->once())
             ->method('isFail')

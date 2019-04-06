@@ -10,7 +10,7 @@ use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\MiddlewareInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 
-class PipedRoute implements MiddlewareInterface
+class PipedRouteMiddleware implements MiddlewareInterface
 {
     /** @var Pipeline */
     private $pipeline;
