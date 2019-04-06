@@ -94,12 +94,6 @@ final class ContainerConfig implements ContainerConfigInterface
                 $container->types[$service] = $container->lazyGet($service);
             }
         }
-        if (isset($dependencies['callables'])) {
-            foreach ($dependencies['callables'] as $service => $callable) {
-                $container->set($service, $container->lazy($callable, $container));
-                $container->types[$service] = $container->lazyGet($service);
-            }
-        }
         if (isset($dependencies['aliases'])) {
             foreach ($dependencies['aliases'] as $alias => $target) {
                 $container->set($alias, $container->lazyGet($target));

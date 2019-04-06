@@ -14,11 +14,14 @@ use Antidot\Container\ApplicationFactory;
 use Antidot\Container\EmitterFactory;
 use Antidot\Container\MiddlewareFactory;
 use Antidot\Container\MiddlewareFactoryFactory;
+use Antidot\Container\RequestHandlerFactory;
+use Antidot\Container\RequestHandlerFactoryFactory;
 use Antidot\Container\ResponseFactory;
 use Antidot\Container\ServerRequestErrorResponseGeneratorFactory;
 use Antidot\Container\ShowContainerCommandFactory;
 use Antidot\Container\StreamFactory;
 use Antidot\Infrastructure\Aura\Router\AuraRouter;
+use App\Application\Http\Handler\HomePage;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\StreamInterface;
 use Zend\HttpHandlerRunner\Emitter\EmitterStack;
@@ -48,6 +51,7 @@ class ConfigProvider
                 'factories' => [
                     Application::class => ApplicationFactory::class,
                     MiddlewareFactory::class => MiddlewareFactoryFactory::class,
+                    RequestHandlerFactory::class => RequestHandlerFactoryFactory::class,
                     EmitterStack::class => EmitterFactory::class,
                     ErrorResponseGenerator::class => ServerRequestErrorResponseGeneratorFactory::class,
                     StreamInterface::class => StreamFactory::class,

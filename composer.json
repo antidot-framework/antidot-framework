@@ -24,7 +24,6 @@
         "zendframework/zend-config": "^3.2",
         "zendframework/zend-config-aggregator": "^1.1",
         "zendframework/zend-diactoros": "2.1",
-        "zendframework/zend-expressive-aurarouter": "^3.0",
         "zendframework/zend-httphandlerrunner": "^1.1"
     },
     "require-dev": {

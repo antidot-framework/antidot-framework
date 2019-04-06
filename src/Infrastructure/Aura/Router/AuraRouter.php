@@ -10,6 +10,7 @@ use Antidot\Application\Http\Middleware\PipedRoute;
 use Antidot\Application\Http\Route;
 use Antidot\Application\Http\Router;
 use Antidot\Container\MiddlewareFactory;
+use Antidot\Container\RequestHandlerFactory;
 use Aura\Router\Route as BaseRoute;
 use Aura\Router\RouterContainer;
 use Psr\Http\Message\ResponseInterface;
@@ -23,12 +24,18 @@ class AuraRouter implements Router
     /** @var RouterContainer */
     private $routeContainer;
     /** @var MiddlewareFactory */
-    private $factory;
+    private $middlewareFactory;
+    /** @var RequestHandlerFactory */
+    private $requestHandlerFactory;
 
-    public function __construct(RouterContainer $routerContainer, MiddlewareFactory $factory)
-    {
+    public function __construct(
+        RouterContainer $routerContainer,
+        MiddlewareFactory $middlewareFactory,
+        RequestHandlerFactory $requestHandlerFactory
+    ) {
         $this->routeContainer = $routerContainer;
-        $this->factory = $factory;
+        $this->middlewareFactory = $middlewareFactory;
+        $this->requestHandlerFactory = $requestHandlerFactory;
     }
 
     public function append(Route $route): void
@@ -59,11 +66,20 @@ class AuraRouter implements Router
         $middlewarePipeline = $route->handler;
         $handler = array_pop($middlewarePipeline);
         foreach ($middlewarePipeline as $middleware) {
-            $pipeline->pipe($this->factory->create($middleware));
+            $pipeline->pipe($this->middlewareFactory->create($middleware));
         }
+
+        $requestHandlerFactory = $this->requestHandlerFactory;
         $pipeline->pipe(new CallableMiddleware(
-            static function (ServerRequestInterface $request) use ($handler): ResponseInterface {
-                return $handler($request);
+            static function (
+                ServerRequestInterface $request
+            ) use (
+                $handler,
+                $requestHandlerFactory
+            ): ResponseInterface {
+                $handler = $requestHandlerFactory->create($handler);
+
+                return $handler->handle($request);
             }
         ));
 
