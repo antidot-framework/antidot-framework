@@ -25,7 +25,7 @@ class PipedRouteMiddleware implements MiddlewareInterface
 
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
-        if ($this->isFail) {
+        if ($this->isFail()) {
             throw RouteNotFound::withPath($request->getRequestTarget());
         }
 
