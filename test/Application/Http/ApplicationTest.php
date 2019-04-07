@@ -8,28 +8,32 @@ use Antidot\Application\Http\Application;
 use Antidot\Application\Http\Middleware\LazyLoadingMiddleware;
 use Antidot\Application\Http\Middleware\Pipeline;
 use Antidot\Application\Http\Route;
+use Antidot\Application\Http\RouteFactory;
 use Antidot\Application\Http\Router;
 use Antidot\Container\MiddlewareFactory;
+use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Psr\Container\ContainerInterface;
 use Zend\HttpHandlerRunner\RequestHandlerRunner;
 
 class ApplicationTest extends TestCase
 {
-    /** @var RequestHandlerRunner|\PHPUnit\Framework\MockObject\MockObject */
+    /** @var RequestHandlerRunner|MockObject */
     private $runner;
     /** @var MiddlewareFactory */
     private $middlewareFactory;
-    /** @var Pipeline|\PHPUnit\Framework\MockObject\MockObject */
+    /** @var Pipeline|MockObject */
     private $pipeline;
-    /** @var Router|\PHPUnit\Framework\MockObject\MockObject */
+    /** @var Router|MockObject */
     private $router;
     /** @var Application */
     private $app;
     /** @var array */
     private $routeData;
-    /** @var ContainerInterface|\PHPUnit\Framework\MockObject\MockObject */
+    /** @var ContainerInterface|MockObject */
     private $container;
+    /** @var RouteFactory|MockObject */
+    private $routeFactory;
 
     public function testItShouldBeConstructedHavingNeededDependencies(): void
     {
@@ -37,6 +41,7 @@ class ApplicationTest extends TestCase
         $this->givenMiddlewareFactory();
         $this->givenPipeline();
         $this->givenRouter();
+        $this->givenARouteFactory();
         $this->whenApplicationConstructorIsCalled();
         $this->thenApplicationShouldBeCreated();
     }
@@ -125,13 +130,19 @@ class ApplicationTest extends TestCase
         $this->router = $this->createMock(Router::class);
     }
 
+    private function givenARouteFactory(): void
+    {
+        $this->routeFactory = $this->createMock(RouteFactory::class);
+    }
+
     private function whenApplicationConstructorIsCalled(): void
     {
         $this->app = new Application(
             $this->runner,
             $this->pipeline,
             $this->router,
-            $this->middlewareFactory
+            $this->middlewareFactory,
+            $this->routeFactory
         );
     }
 
@@ -146,6 +157,7 @@ class ApplicationTest extends TestCase
         $this->givenMiddlewareFactory();
         $this->givenPipeline();
         $this->givenRouter();
+        $this->givenARouteFactory();
         $this->whenApplicationConstructorIsCalled();
     }
 

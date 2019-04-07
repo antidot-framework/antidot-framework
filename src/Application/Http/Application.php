@@ -6,7 +6,6 @@ namespace Antidot\Application\Http;
 
 use Antidot\Application\Http\Middleware\Pipeline;
 use Antidot\Container\MiddlewareFactory;
-use Antidot\Infrastructure\Aura\Router\AuraRoute;
 use Zend\HttpHandlerRunner\RequestHandlerRunner;
 
 final class Application
@@ -15,17 +14,20 @@ final class Application
     private $router;
     private $runner;
     private $middlewareFactory;
+    private $routeFactory;
 
     public function __construct(
         RequestHandlerRunner $runner,
         Pipeline $pipeline,
         Router $router,
-        MiddlewareFactory $middlewareFactory
+        MiddlewareFactory $middlewareFactory,
+        RouteFactory $routeFactory
     ) {
         $this->runner = $runner;
         $this->pipeline = $pipeline;
         $this->router = $router;
         $this->middlewareFactory = $middlewareFactory;
+        $this->routeFactory = $routeFactory;
     }
 
     public function run(): void
@@ -40,38 +42,38 @@ final class Application
 
     public function get(string $uri, array $middleware, string $name): void
     {
-        $this->route('GET', $uri, $name, $middleware);
+        $this->route('GET', $uri, $middleware, $name);
     }
 
     public function post(string $uri, array $middleware, string $name): void
     {
-        $this->route('POST', $uri, $name, $middleware);
+        $this->route('POST', $uri, $middleware, $name);
     }
 
     public function patch(string $uri, array $middleware, string $name): void
     {
-        $this->route('PATCH', $uri, $name, $middleware);
+        $this->route('PATCH', $uri, $middleware, $name);
     }
 
     public function put(string $uri, array $middleware, string $name): void
     {
-        $this->route('PUT', $uri, $name, $middleware);
+        $this->route('PUT', $uri, $middleware, $name);
     }
 
     public function delete(string $uri, array $middleware, string $name): void
     {
-        $this->route('DELETE', $uri, $name, $middleware);
+        $this->route('DELETE', $uri, $middleware, $name);
     }
 
     public function options(string $uri, array $middleware, string $name): void
     {
-        $this->route('OPTIONS', $uri, $name, $middleware);
+        $this->route('OPTIONS', $uri, $middleware, $name);
     }
 
-    private function route(string $method, string $uri, string $name, array $middleware): void
+    public function route(string $method, string $uri, array $middleware, string $name): void
     {
         $this->router->append(
-            new AuraRoute([$method], $name, $uri, $middleware)
+            $this->routeFactory->create([$method], $middleware, $uri, $name)
         );
     }
 }

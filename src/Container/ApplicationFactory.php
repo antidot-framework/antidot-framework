@@ -8,6 +8,7 @@ use Antidot\Application\Http\Application;
 use Antidot\Application\Http\Middleware\MiddlewarePipeline;
 use Antidot\Application\Http\Middleware\Pipeline;
 use Antidot\Application\Http\Response\ErrorResponseGenerator;
+use Antidot\Application\Http\RouteFactory;
 use Antidot\Application\Http\Router;
 use Psr\Container\ContainerInterface;
 use Psr\Http\Message\RequestInterface;
@@ -27,7 +28,8 @@ final class ApplicationFactory
             $runner,
             $pipeline,
             $container->get(Router::class),
-            $container->get(MiddlewareFactory::class)
+            $container->get(MiddlewareFactory::class),
+            $container->get(RouteFactory::class)
         );
     }
 
