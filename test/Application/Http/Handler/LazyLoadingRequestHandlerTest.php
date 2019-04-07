@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace AntidotTest\Application\Http\Handler;
 
-use Antidot\Application\Http\Handler\CallableRequestHandler;
 use Antidot\Application\Http\Handler\LazyLoadingRequestHandler;
+use InvalidArgumentException;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Psr\Container\ContainerInterface;
@@ -35,6 +35,16 @@ class LazyLoadingRequestHandlerTest extends TestCase
         $this->thenItReturnsAResponse();
     }
 
+    public function testItShouldThrowExceptionWhenContainerDoesntHasHandler(): void
+    {
+        $this->expectInvalidArgumentException();
+        $this->givenAServerRequest();
+        $this->havingARequestHandler();
+        $this->havingAServiceContainer();
+        $this->andContainerHavingDoesntHaveAHandler();
+        $this->whenRequestIsHandled();
+    }
+
     private function givenAServerRequest(): void
     {
         $this->request = $this->createMock(ServerRequestInterface::class);
@@ -52,6 +62,11 @@ class LazyLoadingRequestHandlerTest extends TestCase
 
     private function andContainerHavingRequestHandlerConfigured(): void
     {
+        $this->container
+            ->expects($this->once())
+            ->method('has')
+            ->with(self::HANDLER_NAME)
+            ->willReturn(true);
         $this->container
             ->expects($this->once())
             ->method('get')
@@ -72,5 +87,19 @@ class LazyLoadingRequestHandlerTest extends TestCase
     private function thenItReturnsAResponse(): void
     {
         $this->assertInstanceOf(ResponseInterface::class, $this->response);
+    }
+
+    private function expectInvalidArgumentException(): void
+    {
+        $this->expectException(InvalidArgumentException::class);
+    }
+
+    private function andContainerHavingDoesntHaveAHandler(): void
+    {
+        $this->container
+            ->expects($this->once())
+            ->method('has')
+            ->with(self::HANDLER_NAME)
+            ->willReturn(false);
     }
 }

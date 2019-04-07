@@ -4,17 +4,19 @@ declare(strict_types=1);
 
 namespace Antidot\Application\Http\Handler;
 
+use InvalidArgumentException;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
+use ReflectionFunction;
 
-class CallableRequestHandler implements RequestHandlerInterface
+final class CallableRequestHandler implements RequestHandlerInterface
 {
-    /** @var callable */
     private $handler;
 
     public function __construct(callable $handler)
     {
+        $this->assertCallableIsValid($handler);
         $this->handler = $handler;
     }
 
@@ -23,5 +25,13 @@ class CallableRequestHandler implements RequestHandlerInterface
         $handler = $this->handler;
 
         return $handler($request);
+    }
+
+    private function assertCallableIsValid($handler): void
+    {
+        $returnType = (new ReflectionFunction($handler))->getReturnType();
+        if (null === $returnType || $returnType->getName() !== ResponseInterface::class) {
+            throw new InvalidArgumentException('Invalid callable given.');
+        }
     }
 }

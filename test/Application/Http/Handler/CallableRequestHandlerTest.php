@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace AntidotTest\Application\Http\Handler;
 
 use Antidot\Application\Http\Handler\CallableRequestHandler;
+use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
@@ -19,6 +20,8 @@ class CallableRequestHandlerTest extends TestCase
     private $handlerChecker;
     /** @var ResponseInterface */
     private $response;
+    /** @var \Closure */
+    private $callable;
 
     public function testItShouldHandleRequestWithCallableAndReturnResponse(): void
     {
@@ -28,6 +31,14 @@ class CallableRequestHandlerTest extends TestCase
         $this->thenItReturnsAResponse();
     }
 
+    public function testItShouldThrowInvalidArgumentExceptionWhenCallableIsNotValid(): void
+    {
+        $this->expectsInvalidArgumentException();
+        $this->givenAServerRequest();
+        $this->havingInvalidCallableRequestHandler();
+        $this->whenRequestIsHandled();
+    }
+
     private function givenAServerRequest(): void
     {
         $this->request = $this->createMock(ServerRequestInterface::class);
@@ -35,18 +46,19 @@ class CallableRequestHandlerTest extends TestCase
 
     private function havingACallableRequestHandler(): void
     {
-        $this->handlerChecker = $this->createMock(RequestHandlerInterface::class);
-        $this->handlerChecker
+        $handlerChecker = $this->createMock(RequestHandlerInterface::class);
+        $handlerChecker
             ->expects($this->once())
             ->method('handle')
             ->with($this->request);
+        $this->callable = static function (ServerRequestInterface $request) use ($handlerChecker): ResponseInterface {
+            return $handlerChecker->handle($request);
+        };
     }
 
     private function whenRequestIsHandled(): void
     {
-        $handler = new CallableRequestHandler(function (ServerRequestInterface $request): ResponseInterface {
-            return $this->handlerChecker->handle($request);
-        });
+        $handler = new CallableRequestHandler($this->callable);
 
         $this->response = $handler->handle($this->request);
     }
@@ -54,5 +66,15 @@ class CallableRequestHandlerTest extends TestCase
     private function thenItReturnsAResponse(): void
     {
         $this->assertInstanceOf(ResponseInterface::class, $this->response);
+    }
+
+    private function expectsInvalidArgumentException(): void
+    {
+        $this->expectException(InvalidArgumentException::class);
+    }
+
+    private function havingInvalidCallableRequestHandler(): void
+    {
+        $this->callable = function () {};
     }
 }

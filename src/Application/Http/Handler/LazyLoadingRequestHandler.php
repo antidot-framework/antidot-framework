@@ -10,18 +10,14 @@ use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 
-class LazyLoadingRequestHandler implements RequestHandlerInterface
+final class LazyLoadingRequestHandler implements RequestHandlerInterface
 {
-    /** @var ContainerInterface */
     private $container;
-    /** @var string */
     private $handlerName;
 
     public function __construct(ContainerInterface $container, string $handlerName)
     {
-        if (false === $container->has($handlerName)) {
-            throw new InvalidArgumentException('Invalid handler name given.');
-        }
+        $this->assertThatContainerHasHandler($container, $handlerName);
         $this->container = $container;
         $this->handlerName = $handlerName;
     }
@@ -31,5 +27,12 @@ class LazyLoadingRequestHandler implements RequestHandlerInterface
         $handler = $this->container->get($this->handlerName);
 
         return $handler->handle($request);
+    }
+
+    private function assertThatContainerHasHandler(ContainerInterface $container, string $handlerName): void
+    {
+        if (false === $container->has($handlerName)) {
+            throw new InvalidArgumentException('Invalid handler name name given.');
+        }
     }
 }
