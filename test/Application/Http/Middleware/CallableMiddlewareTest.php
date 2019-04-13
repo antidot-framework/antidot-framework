@@ -12,6 +12,7 @@ use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\MiddlewareInterface;
 use Psr\Http\Server\RequestHandlerInterface;
+use Zend\Diactoros\Response;
 
 class CallableMiddlewareTest extends TestCase
 {
@@ -96,6 +97,10 @@ class CallableMiddlewareTest extends TestCase
     {
         return [
             [function () {}],
+            [function (ServerRequestInterface $request) {}],
+//            [function ($request): ResponseInterface {
+//                return new Response();
+//            }],
         ];
     }
 }

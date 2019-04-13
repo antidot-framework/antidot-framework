@@ -17,7 +17,6 @@
     "require": {
         "php": "^7.2.13",
         "aura/di": "^3.4",
-        "aura/router": "^3.1",
         "psr/container": "^1.0.0",
         "psr/http-server-middleware": "^1.0",
         "symfony/console": "^4.2",
@@ -28,6 +27,8 @@
         "zendframework/zend-httphandlerrunner": "^1.1"
     },
     "require-dev": {
+        "filp/whoops": "^2.3",
+        "franzl/whoops-middleware": "^1.1",
         "phpro/grumphp": "^0.15.0",
         "phpstan/phpstan": "^0.11.5",
         "phpunit/phpunit": "^8.0",

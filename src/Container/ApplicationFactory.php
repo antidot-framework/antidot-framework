@@ -12,7 +12,6 @@ use Antidot\Application\Http\RouteFactory;
 use Antidot\Application\Http\Router;
 use Psr\Container\ContainerInterface;
 use Psr\Http\Message\RequestInterface;
-use Psr\Http\Server\MiddlewareInterface;
 use SplQueue;
 use Zend\Diactoros\ServerRequestFactory;
 use Zend\HttpHandlerRunner\Emitter\EmitterStack;
