@@ -4,12 +4,10 @@ declare(strict_types=1);
 
 namespace Antidot\Container\Config;
 
-use Antidot\Container\ContainerDelegatorFactory;
 use ArrayObject;
 use Aura\Di\Container;
 use Aura\Di\ContainerConfigInterface;
 
-use function dump;
 use function is_array;
 
 /**
