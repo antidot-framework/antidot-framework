@@ -8,7 +8,7 @@ use Antidot\Application\Http\Middleware\Pipeline;
 use Antidot\Container\MiddlewareFactory;
 use Zend\HttpHandlerRunner\RequestHandlerRunner;
 
-final class Application
+class Application
 {
     private $pipeline;
     private $router;

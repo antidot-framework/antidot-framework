@@ -9,7 +9,7 @@ use Zend\HttpHandlerRunner\Emitter\EmitterInterface;
 use Zend\HttpHandlerRunner\Emitter\EmitterStack;
 use Zend\HttpHandlerRunner\Emitter\SapiEmitter;
 
-final class EmitterFactory
+class EmitterFactory
 {
     public function __invoke(ContainerInterface $container): EmitterInterface
     {
