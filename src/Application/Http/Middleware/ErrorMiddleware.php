@@ -31,13 +31,7 @@ class ErrorMiddleware implements MiddlewareInterface
 
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
-        set_error_handler(static function ($errno, $errstr, $errfile, $errline) {
-            if (! (error_reporting() & $errno)) {
-                // Error is not in mask
-                return;
-            }
-            throw new ErrorException($errstr, 0, $errno, $errfile, $errline);
-        });
+        $this->setErrorHandler();
 
         try {
             if ($this->debug && class_exists(WhoopsMiddleware::class)) {
@@ -50,6 +44,22 @@ class ErrorMiddleware implements MiddlewareInterface
         } catch (Throwable $e) {
         }
 
+        return $this->getErrorResponse($e, $request);
+    }
+
+    private function setErrorHandler(): void
+    {
+        set_error_handler(static function ($errno, $errstr, $errfile, $errline) {
+            if (! (error_reporting() & $errno)) {
+                // Error is not in mask
+                return;
+            }
+            throw new ErrorException($errstr, 0, $errno, $errfile, $errline);
+        });
+    }
+
+    private function getErrorResponse(Throwable $e, ServerRequestInterface $request): ResponseInterface
+    {
         restore_error_handler();
 
         if ($this->debug && class_exists(WhoopsRunner::class)) {

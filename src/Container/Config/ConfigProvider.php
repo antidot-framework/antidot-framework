@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Antidot\Container\Config;
 
-use Antidot\Application\Cli\Command\ShowContainer;
 use Antidot\Application\Http\Application;
 use Antidot\Application\Http\Middleware\ErrorMiddleware;
 use Antidot\Application\Http\Middleware\RouteDispatcherMiddleware;

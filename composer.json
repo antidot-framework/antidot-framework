@@ -7,11 +7,10 @@
         "psr-15"
     ],
     "type": "library",
-    "license": "BSD-2.0",
+    "license": "BSD-2-Clause",
     "authors": [
         {
-            "name": "kpicaza",
-            "email": "kpicaza.sound@gmail.com"
+            "name": "kpicaza"
         }
     ],
     "require": {
