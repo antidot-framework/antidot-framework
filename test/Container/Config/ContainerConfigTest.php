@@ -98,6 +98,14 @@ class ContainerConfigTest extends TestCase
         $this->whenContainerConfigIsDefined();
     }
 
+    public function testItShouldBuildContainerWithGivenConfigConditionalArrayParamsServices(): void
+    {
+        $this->givenAnEmptyContainer();
+        $this->havingAContainerWithConditionalArrayParamsConfig();
+        $this->thenContainerShouldHaveConfiguredConditionalArrayParamsDependencies();
+        $this->whenContainerConfigIsDefined();
+    }
+
     private function givenAnEmptyContainer(): void
     {
         $this->container = $this->createMock(Container::class);
@@ -392,5 +400,49 @@ class ContainerConfigTest extends TestCase
             ->expects($this->exactly(3))
             ->method('lazyGet')
             ->with($this->logicalOr(RequestHandlerRunner::class, Application::class));
+    }
+
+    private function havingAContainerWithConditionalArrayParamsConfig(): void
+    {
+        $this->arguments = [
+            'config' => [1, 2, 3],
+        ];
+        $this->config = [
+            'dependencies' => [
+                'conditionals' => [
+                    Application::class => [
+                        'class' => Application::class,
+                        'arguments' => $this->arguments,
+                    ],
+                ],
+            ],
+        ];
+    }
+
+    private function thenContainerShouldHaveConfiguredConditionalArrayParamsDependencies(): void
+    {
+        $application = $this->createMock(Application::class);
+        $this->container
+            ->expects($this->exactly(2))
+            ->method('set')
+            ->with(
+                $this->logicalOr('config', Application::class),
+                $this->logicalOr(new ArrayObject($this->config, ArrayObject::ARRAY_AS_PROPS), $application)
+            );
+        $this->container
+            ->expects($this->exactly(1))
+            ->method('lazyNew')
+            ->with(Application::class, $this->arguments)
+            ->willReturn($application);
+        $this->container
+            ->expects($this->exactly(1))
+            ->method('lazyGet')
+            ->with(Application::class);
+        $this->container
+            ->expects($this->exactly(1))
+            ->method('has')
+            ->with(Application::class)
+            ->willReturn(true);
+
     }
 }

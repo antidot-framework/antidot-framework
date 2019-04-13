@@ -39,7 +39,7 @@ final class ContainerConfig implements ContainerConfigInterface
         }
         $dependencies = $this->config['dependencies'];
         if (isset($dependencies['delegators'])) {
-            $dependencies = $this->marshalDelegators($container, $dependencies);
+            $dependencies = (new MarshalDelegatorsConfig())($container, $dependencies);
         }
         $this->lazyLoadServices($container, $dependencies);
         $this->lazyLoadFactories($container, $dependencies);
@@ -50,55 +50,6 @@ final class ContainerConfig implements ContainerConfigInterface
 
     public function modify(Container $container)
     {
-    }
-
-    private function marshalDelegators(Container $container, array $dependencies): array
-    {
-        foreach ($dependencies['delegators'] as $service => $delegatorNames) {
-            $factory = null;
-            if (isset($dependencies['services'][$service])) {
-                // Marshal from service
-                $instance = $dependencies['services'][$service];
-                $factory = function () use ($instance) {
-                    return $instance;
-                };
-                unset($dependencies['service'][$service]);
-            }
-            if (isset($dependencies['factories'][$service])) {
-                // Marshal from factory
-                $serviceFactory = $dependencies['factories'][$service];
-                $factory = function () use ($service, $serviceFactory, $container) {
-                    $aService = new $serviceFactory();
-
-                    return \is_callable($serviceFactory)
-                        ? $serviceFactory($container, $service)
-                        : $aService($container, $service);
-                };
-                unset($dependencies['factories'][$service]);
-            }
-            if (isset($dependencies['invokables'][$service])) {
-                // Marshal from invokable
-                $class = $dependencies['invokables'][$service];
-                $factory = function () use ($class) {
-                    return new $class();
-                };
-                unset($dependencies['invokables'][$service]);
-            }
-            if (!\is_callable($factory)) {
-                continue;
-            }
-            $delegatorFactory = 'AuraDelegatorFactory::'.$service;
-            $container->set($delegatorFactory, static function () use ($delegatorNames, $factory) {
-                return new ContainerDelegatorFactory($delegatorNames, $factory);
-            });
-            $container->set(
-                $service,
-                $container->lazyGetCall($delegatorFactory, 'build', $container, $service)
-            );
-            $container->types[$service] = $container->lazyGet($service);
-        }
-
-        return $dependencies;
     }
 
     private function lazyLoad(Container $container, array $dependencies, string $type): void
@@ -138,23 +89,7 @@ final class ContainerConfig implements ContainerConfigInterface
         }
 
         foreach ($dependencies['conditionals'] as $id => $conditional) {
-            $params = [];
-            foreach ($conditional['arguments'] as $type => $implementation) {
-                if (is_array($implementation)) {
-                    $params[$type] = $implementation;
-                    $container->params[$id][$type] = $params[$type];
-                    $container->set($id, $container->lazyNew($conditional['class'], $params));
-                    $container->types[$id] = $container->lazyGet($id);
-                    continue;
-                }
-
-                if (!$container->has($implementation)) {
-                    $container->set($implementation, $container->lazyNew($implementation));
-                    $container->types[$implementation] = $container->lazyGet($implementation);
-                }
-                $params[$type] = $container->lazyGet($implementation);
-                $container->params[$id][$type] = $params[$type];
-            }
+            $params = $this->setConditionalArguments($container, $id, $conditional);
             if (!$container->has($id)) {
                 $container->set($id, $container->lazyNew($conditional['class'], $params));
                 $container->types[$id] = $container->lazyGet($id);
@@ -187,5 +122,28 @@ final class ContainerConfig implements ContainerConfigInterface
         }
 
         $this->lazyLoad($container, $dependencies, 'services');
+    }
+
+    private function setConditionalArguments(Container $container, string $id, array $conditional): array
+    {
+        $params = [];
+        foreach ($conditional['arguments'] as $type => $implementation) {
+            if (is_array($implementation)) {
+                $params[$type] = $implementation;
+                $container->params[$id][$type] = $params[$type];
+                $container->set($id, $container->lazyNew($conditional['class'], $params));
+                $container->types[$id] = $container->lazyGet($id);
+                continue;
+            }
+
+            if (!$container->has($implementation)) {
+                $container->set($implementation, $container->lazyNew($implementation));
+                $container->types[$implementation] = $container->lazyGet($implementation);
+            }
+            $params[$type] = $container->lazyGet($implementation);
+            $container->params[$id][$type] = $params[$type];
+        }
+
+        return $params;
     }
 }
