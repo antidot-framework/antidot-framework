@@ -196,7 +196,7 @@ class ContainerConfigTest extends TestCase
             ->with('config', new ArrayObject($this->config, ArrayObject::ARRAY_AS_PROPS));
         $this->container
             ->expects($this->at(1))
-            ->method('lazyNew')
+            ->method('lazyGet')
             ->with(Pipeline::class)
             ->willReturn($factory);
         $this->container

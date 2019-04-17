@@ -8,6 +8,7 @@ use ArrayObject;
 use Aura\Di\Container;
 use Aura\Di\ContainerConfigInterface;
 
+use function count;
 use function is_array;
 
 /**
@@ -53,7 +54,7 @@ final class ContainerConfig implements ContainerConfigInterface
     private function lazyLoad(Container $container, array $dependencies, string $type): void
     {
         foreach ($dependencies[$type] as $service => $class) {
-            $container->set($service, $container->lazyNew($class));
+            $container->set($service, 'aliases' === $type ? $container->lazyGet($class) : $container->lazyNew($class));
             $container->types[$service] = $container->lazyGet($service);
         }
     }
@@ -64,13 +65,13 @@ final class ContainerConfig implements ContainerConfigInterface
             return;
         }
         foreach ($dependencies['factories'] as $service => $factory) {
-            if (is_array($factory)) {
+            if (is_array($factory) && count($factory) === 2) {
                 $container->set($factory[0], $container->lazyNew($factory[0]));
                 $container->set($service, $container->lazyGetCall(
                     $factory[0],
                     '__invoke',
                     $container,
-                    $factory[1]
+                    $factory[1] ?? null
                 ));
             } else {
                 $container->set($factory, $container->lazyNew($factory));
