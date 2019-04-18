@@ -16,17 +16,24 @@ class PipedRouteMiddleware implements MiddlewareInterface
     private $pipeline;
     /** @var bool */
     private $isFail;
+    /** @var array */
+    private $attributes;
 
-    public function __construct(Pipeline $pipeline, bool $isFail)
+    public function __construct(Pipeline $pipeline, bool $isFail, array $attributes)
     {
         $this->pipeline = $pipeline;
         $this->isFail = $isFail;
+        $this->attributes = $attributes;
     }
 
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
         if ($this->isFail()) {
             throw RouteNotFound::withPath($request->getRequestTarget());
+        }
+
+        foreach ($this->attributes as $attribute => $value) {
+            $request = $request->withAttribute($attribute, $value);
         }
 
         return $this->pipeline->handle($request);

@@ -70,7 +70,8 @@ class PipedRouteMiddlewareTest extends TestCase
     {
         $pipedRoute = new PipedRouteMiddleware(
             $this->pipeline,
-            $this->routeDoesNoExist
+            $this->routeDoesNoExist,
+            []
         );
 
         $this->response = $pipedRoute->process($this->request, $this->handler);
