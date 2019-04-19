@@ -7,6 +7,8 @@ namespace Antidot\Container\Config;
 use Antidot\Container\ContainerDelegatorFactory;
 use Aura\Di\Container;
 
+use function is_callable;
+
 class MarshalDelegatorsConfig
 {
     public function __invoke(Container $container, array $dependencies): array
@@ -16,7 +18,7 @@ class MarshalDelegatorsConfig
             $this->delegateServices($dependencies, $service, $factory);
             $this->delegateFactories($container, $dependencies, $service, $factory);
             $this->delegateInvokables($dependencies, $service, $factory);
-            if (!\is_callable($factory)) {
+            if (!is_callable($factory)) {
                 continue;
             }
             $delegatorFactory = 'AuraDelegatorFactory::'.$service;
@@ -33,7 +35,7 @@ class MarshalDelegatorsConfig
         return $dependencies;
     }
 
-    private function delegateServices(array $dependencies, string $service, ?callable &$factory): void
+    private function delegateServices(array &$dependencies, string $service, ?callable &$factory): void
     {
         if (empty($dependencies['services'][$service])) {
             return;
@@ -48,7 +50,7 @@ class MarshalDelegatorsConfig
 
     private function delegateFactories(
         Container $container,
-        array $dependencies,
+        array &$dependencies,
         string $service,
         ?callable &$factory
     ): void {
@@ -60,21 +62,21 @@ class MarshalDelegatorsConfig
         $factory = static function () use ($service, $serviceFactory, $container) {
             $aService = new $serviceFactory();
 
-            return \is_callable($serviceFactory)
+            return is_callable($serviceFactory)
                 ? $serviceFactory($container, $service)
                 : $aService($container, $service);
         };
         unset($dependencies['factories'][$service]);
     }
 
-    private function delegateInvokables(array $dependencies, string $service, ?callable &$factory): void
+    private function delegateInvokables(array &$dependencies, string $service, ?callable &$factory): void
     {
         if (empty($dependencies['invokables'][$service])) {
             return;
         }
         // Marshal from invokable
         $class = $dependencies['invokables'][$service];
-        $factory = function () use ($class) {
+        $factory = static function () use ($class) {
             return new $class();
         };
         unset($dependencies['invokables'][$service]);
