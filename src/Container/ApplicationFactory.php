@@ -39,7 +39,7 @@ final class ApplicationFactory
             $container->get(EmitterStack::class),
             static function (): RequestInterface {
                 return ServerRequestFactory::fromGlobals(
-                    $_SERVER,
+                    array_filter($_SERVER, 'is_string'),
                     $_GET,
                     $_POST,
                     $_COOKIE,
