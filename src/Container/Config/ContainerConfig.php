@@ -8,10 +8,11 @@ use ArrayObject;
 use Aura\Di\Container;
 use Aura\Di\ContainerConfigInterface;
 
-use function count;
 use function is_array;
 
 /**
+ * @deprecated will remove in version 1.0.0
+ *
  * Configuration for the Aura.Di container.
  * This class provides functionality for the following service types:
  * - Aliases
@@ -65,7 +66,7 @@ final class ContainerConfig implements ContainerConfigInterface
             return;
         }
         foreach ($dependencies['factories'] as $service => $factory) {
-            if (is_array($factory) && count($factory) === 2) {
+            if (is_array($factory)) {
                 $container->set($factory[0], $container->lazyNew($factory[0]));
                 $container->set($service, $container->lazyGetCall(
                     $factory[0],

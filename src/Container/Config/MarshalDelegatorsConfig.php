@@ -9,6 +9,12 @@ use Aura\Di\Container;
 
 use function is_callable;
 
+/**
+ * @deprecated will remove in version 1.0.0
+ *
+ * Class MarshalDelegatorsConfig
+ * @package Antidot\Container\Config
+ */
 class MarshalDelegatorsConfig
 {
     public function __invoke(Container $container, array $dependencies): array
