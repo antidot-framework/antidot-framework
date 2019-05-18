@@ -15,6 +15,7 @@ use Antidot\Container\EmitterFactory;
 use Antidot\Container\ErrorMiddlewareFactory;
 use Antidot\Container\MiddlewareFactory;
 use Antidot\Container\MiddlewareFactoryFactory;
+use Antidot\Container\RequestFactory;
 use Antidot\Container\RequestHandlerFactory;
 use Antidot\Container\RequestHandlerFactoryFactory;
 use Antidot\Container\ResponseFactory;
@@ -33,6 +34,7 @@ class ConfigProvider
                     RouteDispatcherMiddleware::class => RouteDispatcherMiddleware::class,
                     RouteNotFoundMiddleware::class => RouteNotFoundMiddleware::class,
                     ErrorResponseGenerator::class => ServerRequestErrorResponseGenerator::class,
+                    RequestFactory::class => RequestFactory::class,
                 ],
                 'factories' => [
                     Application::class => ApplicationFactory::class,
