@@ -7,6 +7,8 @@ namespace Antidot\Container;
 use Aura\Di\Container;
 
 /**
+ * @deprecated will remove in version 1.0.0
+ *
  * Aura.Di-compatible delegator factory.
  *
  * Map an instance of this:

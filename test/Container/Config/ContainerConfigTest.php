@@ -15,6 +15,9 @@ use PHPUnit\Framework\TestCase;
 use Zend\HttpHandlerRunner\Emitter\EmitterInterface;
 use Zend\HttpHandlerRunner\RequestHandlerRunner;
 
+/**
+ * @deprecated will remove in version 1.0.0
+ */
 class ContainerConfigTest extends TestCase
 {
     /** @var Container|MockObject */
