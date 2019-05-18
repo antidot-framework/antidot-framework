@@ -12,7 +12,7 @@ use Psr\Container\ContainerInterface;
 use Psr\Http\Server\MiddlewareInterface;
 use SplQueue;
 
-final class MiddlewareFactory
+class MiddlewareFactory
 {
     private $container;
 

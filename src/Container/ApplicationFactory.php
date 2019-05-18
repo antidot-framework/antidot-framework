@@ -11,9 +11,7 @@ use Antidot\Application\Http\Response\ErrorResponseGenerator;
 use Antidot\Application\Http\RouteFactory;
 use Antidot\Application\Http\Router;
 use Psr\Container\ContainerInterface;
-use Psr\Http\Message\RequestInterface;
 use SplQueue;
-use Zend\Diactoros\ServerRequestFactory;
 use Zend\HttpHandlerRunner\Emitter\EmitterStack;
 use Zend\HttpHandlerRunner\RequestHandlerRunner;
 
@@ -37,15 +35,7 @@ final class ApplicationFactory
         return new RequestHandlerRunner(
             $pipeline,
             $container->get(EmitterStack::class),
-            static function (): RequestInterface {
-                return ServerRequestFactory::fromGlobals(
-                    array_filter($_SERVER, 'is_string'),
-                    $_GET,
-                    $_POST,
-                    $_COOKIE,
-                    $_FILES
-                );
-            },
+            $container->get(RequestFactory::class),
             $container->get(ErrorResponseGenerator::class)
         );
     }
