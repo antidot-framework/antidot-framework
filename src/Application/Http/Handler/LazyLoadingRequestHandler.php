@@ -12,7 +12,9 @@ use Psr\Http\Server\RequestHandlerInterface;
 
 final class LazyLoadingRequestHandler implements RequestHandlerInterface
 {
+    /** @var ContainerInterface  */
     private $container;
+    /** @var string  */
     private $handlerName;
 
     public function __construct(ContainerInterface $container, string $handlerName)

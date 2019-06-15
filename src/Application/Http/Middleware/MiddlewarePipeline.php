@@ -8,6 +8,7 @@ use Antidot\Application\Http\Handler\NextHandler;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\MiddlewareInterface;
+use Psr\Http\Server\RequestHandlerInterface;
 use SplQueue;
 
 final class MiddlewarePipeline implements Pipeline
@@ -33,7 +34,7 @@ final class MiddlewarePipeline implements Pipeline
         return $middleware->process($request, $next);
     }
 
-    public function process(ServerRequestInterface $request, $handler): ResponseInterface
+    public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
         $next = new NextHandler($this->middlewareCollection, $handler);
 

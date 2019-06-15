@@ -7,10 +7,15 @@ namespace Antidot\Container;
 use Antidot\Application\Http\Middleware\CallableMiddleware;
 use Antidot\Application\Http\Middleware\LazyLoadingMiddleware;
 use Antidot\Application\Http\Middleware\MiddlewarePipeline;
+use Closure;
 use InvalidArgumentException;
 use Psr\Container\ContainerInterface;
 use Psr\Http\Server\MiddlewareInterface;
 use SplQueue;
+
+use function is_array;
+use function is_string;
+use function sprintf;
 
 class MiddlewareFactory
 {
@@ -21,30 +26,34 @@ class MiddlewareFactory
         $this->container = $container;
     }
 
+    /**
+     * @param mixed $middlewareName
+     * @return MiddlewareInterface
+     */
     public function create($middlewareName): MiddlewareInterface
     {
         $middleware = null;
 
-        if (\is_string($middlewareName)) {
+        if (is_string($middlewareName)) {
             $middleware = $this->lazyLoadMiddleware($middlewareName);
         }
 
-        if (\is_array($middlewareName)) {
+        if (is_array($middlewareName)) {
             $middleware = $this->pipelineMiddleware($middlewareName);
         }
 
-        if (\is_callable($middlewareName)) {
+        if ($this->isClosure($middlewareName)) {
             $middleware = $this->callableMiddleware($middlewareName);
         }
 
         if (false === $middleware instanceof MiddlewareInterface) {
-            throw new InvalidArgumentException(\sprintf('Invalid $middlewareName %s given.', $middlewareName));
+            throw new InvalidArgumentException(sprintf('Invalid $middlewareName %s given.', $middlewareName));
         }
 
         return $middleware;
     }
 
-    private function callableMiddleware(callable $middleware): MiddlewareInterface
+    private function callableMiddleware(Closure $middleware): MiddlewareInterface
     {
         return new CallableMiddleware($middleware);
     }
@@ -63,5 +72,14 @@ class MiddlewareFactory
         }
 
         return $pipeline;
+    }
+
+    /**
+     * @param mixed $callable
+     * @return bool
+     */
+    private function isClosure($callable): bool
+    {
+        return is_object($callable) && ($callable instanceof Closure);
     }
 }
