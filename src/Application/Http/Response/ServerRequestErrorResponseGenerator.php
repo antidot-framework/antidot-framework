@@ -11,6 +11,7 @@ use Zend\Diactoros\Response;
 final class ServerRequestErrorResponseGenerator implements ErrorResponseGenerator
 {
     public const ERROR_MESSAGE = 'An unexpected error occurred';
+    public const ERROR_CODE = 500;
 
     public function __invoke(Throwable $e): ResponseInterface
     {
@@ -22,8 +23,13 @@ final class ServerRequestErrorResponseGenerator implements ErrorResponseGenerato
         return $response;
     }
 
-    private function getStatusCode(Throwable $e, ResponseInterface $response): int
+    private function getStatusCode(Throwable $exception, ResponseInterface $response): int
     {
-        return $e->getCode() ?? $response->getStatusCode() ?? 500;
+        $statusCode = $exception->getCode() ?? $response->getStatusCode() ?? self::ERROR_CODE;
+        if (is_string($statusCode)) {
+            $statusCode = self::ERROR_CODE;
+        }
+
+        return $statusCode;
     }
 }

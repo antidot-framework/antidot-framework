@@ -21,7 +21,7 @@ use function set_error_handler;
 
 class ErrorMiddleware implements MiddlewareInterface
 {
-    /** @var bool */
+    /** @var bool  */
     private $debug;
 
     public function __construct(bool $debug)
@@ -39,32 +39,38 @@ class ErrorMiddleware implements MiddlewareInterface
                 return $whoopsMiddleware->process($request, $handler);
             }
 
-            $response = $handler->handle($request);
-            return $response;
-        } catch (Throwable $e) {
+            return $handler->handle($request);
+        } catch (Throwable $exception) {
+            return $this->getErrorResponse($exception, $request);
         }
-
-        return $this->getErrorResponse($e, $request);
     }
 
     private function setErrorHandler(): void
     {
-        set_error_handler(static function ($errno, $errstr, $errfile, $errline) {
-            if (! (error_reporting() & $errno)) {
+        $handler = static function (
+            int $errorNumber,
+            string $errorString,
+            string $errorFile,
+            int $errorLine,
+            ?array $errorContext
+        ): bool {
+            if (! (error_reporting() & $errorNumber)) {
                 // Error is not in mask
-                return;
+                return false;
             }
-            throw new ErrorException($errstr, 0, $errno, $errfile, $errline);
-        });
+            throw new ErrorException($errorString, 0, $errorNumber, $errorFile, $errorLine);
+        };
+
+        set_error_handler($handler);
     }
 
-    private function getErrorResponse(Throwable $e, ServerRequestInterface $request): ResponseInterface
+    private function getErrorResponse(Throwable $exeption, ServerRequestInterface $request): ResponseInterface
     {
         restore_error_handler();
 
         if ($this->debug && class_exists(WhoopsRunner::class)) {
             $whoops = new WhoopsRunner();
-            return $whoops->handle($e, $request);
+            return $whoops->handle($exeption, $request);
         }
 
         return new TextResponse('Unexpected Server Error Occurred', 500);

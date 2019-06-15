@@ -13,5 +13,5 @@ interface Pipeline extends MiddlewareInterface, RequestHandlerInterface
 {
     public function pipe(MiddlewareInterface $middleware): void;
 
-    public function process(ServerRequestInterface $request, $handler): ResponseInterface;
+    public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface;
 }

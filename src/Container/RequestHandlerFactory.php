@@ -6,6 +6,7 @@ namespace Antidot\Container;
 
 use Antidot\Application\Http\Handler\CallableRequestHandler;
 use Antidot\Application\Http\Handler\LazyLoadingRequestHandler;
+use Closure;
 use InvalidArgumentException;
 use Psr\Container\ContainerInterface;
 use Psr\Http\Server\RequestHandlerInterface;
@@ -22,6 +23,10 @@ class RequestHandlerFactory
         $this->container = $container;
     }
 
+    /**
+     * @param mixed $handler
+     * @return RequestHandlerInterface
+     */
     public function create($handler): RequestHandlerInterface
     {
         if ($handler instanceof RequestHandlerInterface) {
@@ -32,10 +37,19 @@ class RequestHandlerFactory
             return new LazyLoadingRequestHandler($this->container, $handler);
         }
 
-        if (is_callable($handler)) {
+        if ($this->isClosure($handler)) {
             return new CallableRequestHandler($handler);
         }
 
         throw new InvalidArgumentException('Invalid handler given.');
+    }
+
+    /**
+     * @param mixed $callable
+     * @return bool
+     */
+    private function isClosure($callable): bool
+    {
+        return is_object($callable) && ($callable instanceof Closure);
     }
 }
