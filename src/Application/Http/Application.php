@@ -10,11 +10,11 @@ use Zend\HttpHandlerRunner\RequestHandlerRunner;
 
 class Application
 {
-    private $pipeline;
-    private $router;
-    private $runner;
-    private $middlewareFactory;
-    private $routeFactory;
+    protected $pipeline;
+    protected $router;
+    protected $runner;
+    protected $middlewareFactory;
+    protected $routeFactory;
 
     public function __construct(
         RequestHandlerRunner $runner,
