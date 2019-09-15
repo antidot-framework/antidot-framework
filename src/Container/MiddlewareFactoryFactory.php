@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Antidot\Container;
 
-use Interop\Container\ContainerInterface;
+use Psr\Container\ContainerInterface;
 
 class MiddlewareFactoryFactory
 {
