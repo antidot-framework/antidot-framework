@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Antidot\Container;
 
 use Antidot\Application\Http\Application;
+use Antidot\Application\Http\WebServerApplication;
 use Antidot\Application\Http\Middleware\MiddlewarePipeline;
 use Antidot\Application\Http\Middleware\Pipeline;
 use Antidot\Application\Http\Response\ErrorResponseGenerator;
@@ -21,7 +22,7 @@ final class ApplicationFactory
     {
         $pipeline = new MiddlewarePipeline(new SplQueue());
         $runner = $this->getRunner($container, $pipeline);
-        return new Application(
+        return new WebServerApplication(
             $runner,
             $pipeline,
             $container->get(Router::class),

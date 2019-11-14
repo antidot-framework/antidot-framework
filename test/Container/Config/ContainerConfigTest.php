@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace AntidotTest\Container\Config;
 
-use Antidot\Application\Http\Application;
+use Antidot\Application\Http\WebServerApplication;
 use Antidot\Application\Http\Middleware\Pipeline;
 use Antidot\Container\Config\ContainerConfig;
 use Antidot\Container\EmitterFactory;
@@ -357,8 +357,8 @@ class ContainerConfigTest extends TestCase
         $this->config = [
             'dependencies' => [
                 'conditionals' => [
-                    Application::class => [
-                        'class' => Application::class,
+                    WebServerApplication::class => [
+                        'class' => WebServerApplication::class,
                         'arguments' => $this->arguments,
                     ],
                 ],
@@ -375,7 +375,7 @@ class ContainerConfigTest extends TestCase
         $this->container
             ->expects($this->exactly(2))
             ->method('has')
-            ->with($this->logicalOr(RequestHandlerRunner::class, Application::class))
+            ->with($this->logicalOr(RequestHandlerRunner::class, WebServerApplication::class))
             ->willReturn(true);
         $this->container
             ->expects($this->at(2))
@@ -393,16 +393,16 @@ class ContainerConfigTest extends TestCase
         $this->container
             ->expects($this->exactly(2))
             ->method('has')
-            ->with($this->logicalOr(RequestHandlerRunner::class, Application::class))
+            ->with($this->logicalOr(RequestHandlerRunner::class, WebServerApplication::class))
             ->willReturn(false);
         $this->container
             ->expects($this->exactly(2))
             ->method('lazyNew')
-            ->with($this->logicalOr(RequestHandlerRunner::class, Application::class));
+            ->with($this->logicalOr(RequestHandlerRunner::class, WebServerApplication::class));
         $this->container
             ->expects($this->exactly(3))
             ->method('lazyGet')
-            ->with($this->logicalOr(RequestHandlerRunner::class, Application::class));
+            ->with($this->logicalOr(RequestHandlerRunner::class, WebServerApplication::class));
     }
 
     private function havingAContainerWithConditionalArrayParamsConfig(): void
@@ -413,8 +413,8 @@ class ContainerConfigTest extends TestCase
         $this->config = [
             'dependencies' => [
                 'conditionals' => [
-                    Application::class => [
-                        'class' => Application::class,
+                    WebServerApplication::class => [
+                        'class' => WebServerApplication::class,
                         'arguments' => $this->arguments,
                     ],
                 ],
@@ -424,27 +424,27 @@ class ContainerConfigTest extends TestCase
 
     private function thenContainerShouldHaveConfiguredConditionalArrayParamsDependencies(): void
     {
-        $application = $this->createMock(Application::class);
+        $application = $this->createMock(WebServerApplication::class);
         $this->container
             ->expects($this->exactly(2))
             ->method('set')
             ->with(
-                $this->logicalOr('config', Application::class),
+                $this->logicalOr('config', WebServerApplication::class),
                 $this->logicalOr(new ArrayObject($this->config, ArrayObject::ARRAY_AS_PROPS), $application)
             );
         $this->container
             ->expects($this->exactly(1))
             ->method('lazyNew')
-            ->with(Application::class, $this->arguments)
+            ->with(WebServerApplication::class, $this->arguments)
             ->willReturn($application);
         $this->container
             ->expects($this->exactly(1))
             ->method('lazyGet')
-            ->with(Application::class);
+            ->with(WebServerApplication::class);
         $this->container
             ->expects($this->exactly(1))
             ->method('has')
-            ->with(Application::class)
+            ->with(WebServerApplication::class)
             ->willReturn(true);
 
     }

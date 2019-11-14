@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace AntidotTest\Container\Config;
 
 use Antidot\Application\Http\Application;
+use Antidot\Application\Http\WebServerApplication;
 use Antidot\Application\Http\Response\ErrorResponseGenerator;
 use Antidot\Application\Http\RouteFactory;
 use Antidot\Application\Http\Router;
@@ -20,7 +21,7 @@ class ApplicationFactoryTest extends TestCase
 {
     /** @var MockObject|ContainerInterface */
     private $container;
-    /** @var Application */
+    /** @var WebServerApplication */
     private $application;
 
     public function testItShouldCreateServerRequestFromServerGlobals(): void

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace AntidotTest\Application\Http;
 
 use Antidot\Application\Http\Application;
+use Antidot\Application\Http\WebServerApplication;
 use Antidot\Application\Http\Middleware\LazyLoadingMiddleware;
 use Antidot\Application\Http\Middleware\Pipeline;
 use Antidot\Application\Http\Route;
@@ -26,7 +27,7 @@ class ApplicationTest extends TestCase
     private $pipeline;
     /** @var Router|MockObject */
     private $router;
-    /** @var Application */
+    /** @var WebServerApplication */
     private $app;
     /** @var array */
     private $routeData;
@@ -137,7 +138,7 @@ class ApplicationTest extends TestCase
 
     private function whenApplicationConstructorIsCalled(): void
     {
-        $this->app = new Application(
+        $this->app = new WebServerApplication(
             $this->runner,
             $this->pipeline,
             $this->router,

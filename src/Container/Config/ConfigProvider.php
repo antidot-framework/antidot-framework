@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Antidot\Container\Config;
 
 use Antidot\Application\Http\Application;
+use Antidot\Application\Http\WebServerApplication;
 use Antidot\Application\Http\Middleware\ErrorMiddleware;
 use Antidot\Application\Http\Middleware\RouteDispatcherMiddleware;
 use Antidot\Application\Http\Middleware\RouteNotFoundMiddleware;
