@@ -35,22 +35,18 @@ class MiddlewareFactory
         $middleware = null;
 
         if (is_string($middlewareName)) {
-            $middleware = $this->lazyLoadMiddleware($middlewareName);
+            return $this->lazyLoadMiddleware($middlewareName);
         }
 
         if (is_array($middlewareName)) {
-            $middleware = $this->pipelineMiddleware($middlewareName);
+            return $this->pipelineMiddleware($middlewareName);
         }
 
         if ($this->isClosure($middlewareName)) {
-            $middleware = $this->callableMiddleware($middlewareName);
+            return $this->callableMiddleware($middlewareName);
         }
 
-        if (false === $middleware instanceof MiddlewareInterface) {
-            throw new InvalidArgumentException(sprintf('Invalid $middlewareName %s given.', $middlewareName));
-        }
-
-        return $middleware;
+        throw new InvalidArgumentException(sprintf('Invalid $middlewareName %s given.', $middlewareName));
     }
 
     private function callableMiddleware(Closure $middleware): MiddlewareInterface
