@@ -21,7 +21,7 @@ use function set_error_handler;
 
 class ErrorMiddleware implements MiddlewareInterface
 {
-    /** @var bool  */
+    /** @var bool */
     private $debug;
 
     public function __construct(bool $debug)
@@ -36,11 +36,16 @@ class ErrorMiddleware implements MiddlewareInterface
         try {
             if ($this->debug && class_exists(WhoopsMiddleware::class)) {
                 $whoopsMiddleware = new WhoopsMiddleware();
-                return $whoopsMiddleware->process($request, $handler);
+                $response = $whoopsMiddleware->process($request, $handler);
+                restore_error_handler();
+                return $response;
             }
 
-            return $handler->handle($request);
+            $response = $handler->handle($request);
+            restore_error_handler();
+            return $response;
         } catch (Throwable $exception) {
+            restore_error_handler();
             return $this->getErrorResponse($exception, $request);
         }
     }
@@ -54,7 +59,7 @@ class ErrorMiddleware implements MiddlewareInterface
             int $errorLine,
             ?array $errorContext
         ): bool {
-            if (! (error_reporting() & $errorNumber)) {
+            if (!(error_reporting() & $errorNumber)) {
                 // Error is not in mask
                 return false;
             }
@@ -66,8 +71,6 @@ class ErrorMiddleware implements MiddlewareInterface
 
     private function getErrorResponse(Throwable $exeption, ServerRequestInterface $request): ResponseInterface
     {
-        restore_error_handler();
-
         if ($this->debug && class_exists(WhoopsRunner::class)) {
             $whoops = new WhoopsRunner();
             return $whoops->handle($exeption, $request);
