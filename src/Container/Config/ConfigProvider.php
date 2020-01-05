@@ -22,7 +22,7 @@ use Antidot\Container\ResponseFactory;
 use Antidot\Container\StreamFactory;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\StreamInterface;
-use Zend\HttpHandlerRunner\Emitter\EmitterStack;
+use Laminas\HttpHandlerRunner\Emitter\EmitterStack;
 
 class ConfigProvider
 {

@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Antidot\Container;
 
 use Psr\Http\Message\StreamInterface;
-use Zend\Diactoros\Stream;
+use Laminas\Diactoros\Stream;
 
 class StreamFactory
 {

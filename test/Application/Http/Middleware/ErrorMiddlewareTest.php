@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace AntidotTest\Application\Http\Middleware;
 
 use Antidot\Application\Http\Middleware\ErrorMiddleware;
-use function dump;
 use InvalidArgumentException;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;

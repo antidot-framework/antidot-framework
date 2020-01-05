@@ -7,7 +7,7 @@ namespace Antidot\Application\Http\Response;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Throwable;
-use Zend\Diactoros\Response;
+use Laminas\Diactoros\Response;
 
 final class ServerRequestErrorResponseGenerator implements ErrorResponseGenerator
 {

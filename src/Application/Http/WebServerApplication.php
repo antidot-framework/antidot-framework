@@ -6,7 +6,7 @@ namespace Antidot\Application\Http;
 
 use Antidot\Application\Http\Middleware\Pipeline;
 use Antidot\Container\MiddlewareFactory;
-use Zend\HttpHandlerRunner\RequestHandlerRunner;
+use Laminas\HttpHandlerRunner\RequestHandlerRunner;
 
 class WebServerApplication implements Application
 {

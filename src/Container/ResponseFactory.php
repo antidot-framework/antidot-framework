@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Antidot\Container;
 
-use Zend\Diactoros\Response;
+use Laminas\Diactoros\Response;
 
 class ResponseFactory
 {

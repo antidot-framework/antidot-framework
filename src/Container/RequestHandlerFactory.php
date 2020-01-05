@@ -11,7 +11,6 @@ use InvalidArgumentException;
 use Psr\Container\ContainerInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 
-use function is_callable;
 use function is_string;
 
 class RequestHandlerFactory

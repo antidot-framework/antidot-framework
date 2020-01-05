@@ -13,8 +13,8 @@ use Antidot\Application\Http\RouteFactory;
 use Antidot\Application\Http\Router;
 use Psr\Container\ContainerInterface;
 use SplQueue;
-use Zend\HttpHandlerRunner\Emitter\EmitterStack;
-use Zend\HttpHandlerRunner\RequestHandlerRunner;
+use Laminas\HttpHandlerRunner\Emitter\EmitterStack;
+use Laminas\HttpHandlerRunner\RequestHandlerRunner;
 
 final class ApplicationFactory
 {

@@ -15,7 +15,7 @@ use Antidot\Container\RequestFactory;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Psr\Container\ContainerInterface;
-use Zend\HttpHandlerRunner\Emitter\EmitterStack;
+use Laminas\HttpHandlerRunner\Emitter\EmitterStack;
 
 class ApplicationFactoryTest extends TestCase
 {

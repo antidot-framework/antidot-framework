@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Antidot\Container;
 
 use Psr\Http\Message\RequestInterface;
-use Zend\Diactoros\ServerRequestFactory;
+use Laminas\Diactoros\ServerRequestFactory;
 
 class RequestFactory
 {

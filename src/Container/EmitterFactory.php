@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace Antidot\Container;
 
 use Psr\Container\ContainerInterface;
-use Zend\HttpHandlerRunner\Emitter\EmitterInterface;
-use Zend\HttpHandlerRunner\Emitter\EmitterStack;
-use Zend\HttpHandlerRunner\Emitter\SapiEmitter;
+use Laminas\HttpHandlerRunner\Emitter\EmitterInterface;
+use Laminas\HttpHandlerRunner\Emitter\EmitterStack;
+use Laminas\HttpHandlerRunner\Emitter\SapiEmitter;
 
 class EmitterFactory
 {
