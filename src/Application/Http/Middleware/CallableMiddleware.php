@@ -14,8 +14,7 @@ use ReflectionFunction;
 
 final class CallableMiddleware implements MiddlewareInterface
 {
-    /** @var Closure */
-    private $middleware;
+    private Closure $middleware;
 
     public function __construct(Closure $middleware)
     {

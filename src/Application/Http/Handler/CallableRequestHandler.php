@@ -13,8 +13,7 @@ use ReflectionFunction;
 
 final class CallableRequestHandler implements RequestHandlerInterface
 {
-    /** @var Closure  */
-    private $handler;
+    private Closure $handler;
 
     public function __construct(Closure $handler)
     {

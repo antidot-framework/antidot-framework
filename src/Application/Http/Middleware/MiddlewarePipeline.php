@@ -13,7 +13,7 @@ use SplQueue;
 
 final class MiddlewarePipeline implements Pipeline
 {
-    private $middlewareCollection;
+    private SplQueue $middlewareCollection;
 
     public function __construct(SplQueue $middlewareCollection)
     {

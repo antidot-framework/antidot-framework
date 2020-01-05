@@ -6,3 +6,8 @@ Antidot Framework
 [![Build Status](https://scrutinizer-ci.com/g/antidot-framework/antidot-framework/badges/build.png?b=master)](https://scrutinizer-ci.com/g/antidot-framework/antidot-framework/build-status/master)
 [![Code Intelligence Status](https://scrutinizer-ci.com/g/antidot-framework/antidot-framework/badges/code-intelligence.svg?b=master)](https://scrutinizer-ci.com/code-intelligence)
 [![Maintainability](https://api.codeclimate.com/v1/badges/0e1302d3e8c732c071ca/maintainability)](https://codeclimate.com/github/antidot-framework/antidot-framework/maintainability)
+
+## Requirements
+
+* PHP >= 7.2.13 for 0.x.x
+* PHP >= 7.4.0 for current

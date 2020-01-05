@@ -13,8 +13,7 @@ final class ServerRequestErrorResponseGenerator implements ErrorResponseGenerato
 {
     public const ERROR_MESSAGE = 'An unexpected error occurred';
     public const ERROR_CODE = 500;
-    /** @var bool * */
-    private $devMode;
+    private bool $devMode;
 
     public function __construct(bool $devMode = false)
     {

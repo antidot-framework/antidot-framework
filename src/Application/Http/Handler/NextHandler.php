@@ -12,8 +12,8 @@ use SplQueue;
 
 final class NextHandler implements RequestHandlerInterface
 {
-    private $queue;
-    private $handler;
+    private SplQueue $queue;
+    private RequestHandlerInterface $handler;
 
     public function __construct(SplQueue $queue, RequestHandlerInterface $requestHandler)
     {

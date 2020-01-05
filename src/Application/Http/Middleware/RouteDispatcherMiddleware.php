@@ -12,7 +12,7 @@ use Psr\Http\Server\RequestHandlerInterface;
 
 final class RouteDispatcherMiddleware implements MiddlewareInterface
 {
-    private $router;
+    private Router $router;
 
     public function __construct(Router $router)
     {

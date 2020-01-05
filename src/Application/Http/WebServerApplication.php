@@ -10,11 +10,11 @@ use Laminas\HttpHandlerRunner\RequestHandlerRunner;
 
 class WebServerApplication implements Application
 {
-    protected $pipeline;
-    protected $router;
-    protected $runner;
-    protected $middlewareFactory;
-    protected $routeFactory;
+    protected Pipeline $pipeline;
+    protected Router $router;
+    protected RequestHandlerRunner $runner;
+    protected MiddlewareFactory $middlewareFactory;
+    protected RouteFactory $routeFactory;
 
     public function __construct(
         RequestHandlerRunner $runner,

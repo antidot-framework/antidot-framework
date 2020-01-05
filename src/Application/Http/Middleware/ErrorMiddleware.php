@@ -21,8 +21,7 @@ use function set_error_handler;
 
 class ErrorMiddleware implements MiddlewareInterface
 {
-    /** @var bool */
-    private $debug;
+    private bool $debug;
 
     public function __construct(bool $debug)
     {

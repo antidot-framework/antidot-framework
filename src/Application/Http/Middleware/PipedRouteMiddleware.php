@@ -12,12 +12,9 @@ use Psr\Http\Server\RequestHandlerInterface;
 
 class PipedRouteMiddleware implements MiddlewareInterface
 {
-    /** @var Pipeline */
-    private $pipeline;
-    /** @var bool */
-    private $isFail;
-    /** @var array */
-    private $attributes;
+    private Pipeline $pipeline;
+    private bool $isFail;
+    private array $attributes;
 
     public function __construct(Pipeline $pipeline, bool $isFail, array $attributes)
     {
