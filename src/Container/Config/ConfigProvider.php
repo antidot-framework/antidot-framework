@@ -29,22 +29,20 @@ class ConfigProvider
     public function __invoke(): array
     {
         return [
-            'dependencies' => [
-                'invokables' => [
-                    RouteDispatcherMiddleware::class => RouteDispatcherMiddleware::class,
-                    RouteNotFoundMiddleware::class => RouteNotFoundMiddleware::class,
-                    ErrorResponseGenerator::class => ServerRequestErrorResponseGenerator::class,
-                    RequestFactory::class => RequestFactory::class,
-                ],
-                'factories' => [
-                    Application::class => ApplicationFactory::class,
-                    MiddlewareFactory::class => MiddlewareFactoryFactory::class,
-                    RequestHandlerFactory::class => RequestHandlerFactoryFactory::class,
-                    EmitterStack::class => EmitterFactory::class,
-                    ErrorMiddleware::class => ErrorMiddlewareFactory::class,
-                    StreamInterface::class => StreamFactory::class,
-                    ResponseInterface::class => ResponseFactory::class,
-                ],
+            'services' => [
+                RouteDispatcherMiddleware::class => RouteDispatcherMiddleware::class,
+                RouteNotFoundMiddleware::class => RouteNotFoundMiddleware::class,
+                ErrorResponseGenerator::class => ServerRequestErrorResponseGenerator::class,
+                RequestFactory::class => RequestFactory::class,
+            ],
+            'factories' => [
+                Application::class => ApplicationFactory::class,
+                MiddlewareFactory::class => MiddlewareFactoryFactory::class,
+                RequestHandlerFactory::class => RequestHandlerFactoryFactory::class,
+                EmitterStack::class => EmitterFactory::class,
+                ErrorMiddleware::class => ErrorMiddlewareFactory::class,
+                StreamInterface::class => StreamFactory::class,
+                ResponseInterface::class => ResponseFactory::class,
             ],
         ];
     }
