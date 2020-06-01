@@ -64,7 +64,9 @@ class ErrorMiddlewareTest extends TestCase
 
     private function givenAServerRequest(): void
     {
-        $this->request = $this->createMock(ServerRequestInterface::class);
+        $this->request = $this->createConfiguredMock(ServerRequestInterface::class, [
+            'getHeader' => ['application/json']
+        ]);
     }
 
     private function givenARequestHandler(): void
