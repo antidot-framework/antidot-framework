@@ -68,11 +68,11 @@ class ErrorMiddleware implements MiddlewareInterface
         set_error_handler($handler);
     }
 
-    private function getErrorResponse(Throwable $exeption, ServerRequestInterface $request): ResponseInterface
+    private function getErrorResponse(Throwable $exception, ServerRequestInterface $request): ResponseInterface
     {
         if ($this->debug && class_exists(WhoopsRunner::class)) {
             $whoops = new WhoopsRunner();
-            return $whoops->handle($exeption, $request);
+            return $whoops->handle($exception, $request);
         }
 
         return new TextResponse('Unexpected Server Error Occurred', 500);
