@@ -31,9 +31,9 @@ final class ServerRequestErrorResponseGenerator implements ErrorResponseGenerato
         $response = $response->withStatus(self::ERROR_CODE);
 
         if ($this->devMode) {
-            $response = $response->withHeader('Content-Type', 'application/json');
             $response->getBody()->write($this->getErrorAsJsonString($e, $request));
 
+            /** @var ResponseInterface $response */
             return $response;
         }
 
@@ -58,8 +58,8 @@ final class ServerRequestErrorResponseGenerator implements ErrorResponseGenerato
             'request' => null === $request ?: [
                 'headers' => $request->getHeaders(),
             ]
-        ]);
+        ], JSON_THROW_ON_ERROR);
 
-        return is_string($responseString) ? $responseString : $e->getMessage();
+        return $responseString;
     }
 }

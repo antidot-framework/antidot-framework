@@ -9,5 +9,5 @@ use Throwable;
 
 interface ErrorResponseGenerator
 {
-    public function __invoke(Throwable $e): ResponseInterface;
+    public function __invoke(Throwable $exception): ResponseInterface;
 }
