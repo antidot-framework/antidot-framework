@@ -33,7 +33,7 @@ final class LazyLoadingMiddleware implements MiddlewareInterface
     private function assertThatContainerHasMiddleware(ContainerInterface $container, string $middlewareName): void
     {
         if (false === $container->has($middlewareName)) {
-            throw new InvalidArgumentException('Invalid middleware name given.');
+            throw new InvalidArgumentException(sprintf('Invalid middleware name given %s.', $middlewareName));
         }
     }
 }

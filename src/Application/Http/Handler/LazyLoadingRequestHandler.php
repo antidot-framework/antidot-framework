@@ -32,7 +32,7 @@ final class LazyLoadingRequestHandler implements RequestHandlerInterface
     private function assertThatContainerHasHandler(ContainerInterface $container, string $handlerName): void
     {
         if (false === $container->has($handlerName)) {
-            throw new InvalidArgumentException('Invalid handler name name given.');
+            throw new InvalidArgumentException(sprintf('Invalid handler name name given %s.', $handlerName));
         }
     }
 }
