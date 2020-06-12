@@ -9,5 +9,5 @@ Antidot Framework
 
 ## Requirements
 
-* PHP >= 7.2.13 for 0.x.x
+* PHP >= 7.2.13 for 0.0.x
 * PHP >= 7.4.0 for current
