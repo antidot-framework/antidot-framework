@@ -12,9 +12,15 @@ use SplQueue;
 
 final class NextHandler implements RequestHandlerInterface
 {
+    /**
+     * @var SplQueue<MiddlewareInterface>
+     */
     private SplQueue $queue;
     private RequestHandlerInterface $handler;
 
+    /**
+     * @param SplQueue<MiddlewareInterface> $queue
+     */
     public function __construct(SplQueue $queue, RequestHandlerInterface $requestHandler)
     {
         $this->queue = $queue;

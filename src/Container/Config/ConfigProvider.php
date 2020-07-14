@@ -26,6 +26,9 @@ use Laminas\HttpHandlerRunner\Emitter\EmitterStack;
 
 class ConfigProvider
 {
+    /**
+     * @return array<mixed>
+     */
     public function __invoke(): array
     {
         return [
