@@ -14,8 +14,12 @@ class PipedRouteMiddleware implements MiddlewareInterface
 {
     private Pipeline $pipeline;
     private bool $isFail;
+    /** @var array<mixed> */
     private array $attributes;
 
+    /**
+     * @param array<mixed> $attributes
+     */
     public function __construct(Pipeline $pipeline, bool $isFail, array $attributes)
     {
         $this->pipeline = $pipeline;

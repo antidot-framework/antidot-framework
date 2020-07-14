@@ -19,7 +19,7 @@ use function sprintf;
 
 class MiddlewareFactory
 {
-    private $container;
+    private ContainerInterface $container;
 
     public function __construct(ContainerInterface $container)
     {
@@ -59,6 +59,9 @@ class MiddlewareFactory
         return new LazyLoadingMiddleware($this->container, $middlewareName);
     }
 
+    /**
+     * @param array<string> $middlewareNames
+     */
     private function pipelineMiddleware(array $middlewareNames): MiddlewareInterface
     {
         $pipeline = new MiddlewarePipeline(new SplQueue());

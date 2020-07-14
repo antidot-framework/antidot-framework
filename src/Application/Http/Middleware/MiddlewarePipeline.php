@@ -13,8 +13,12 @@ use SplQueue;
 
 final class MiddlewarePipeline implements Pipeline
 {
+    /** @var SplQueue<MiddlewareInterface>  */
     private SplQueue $middlewareCollection;
 
+    /**
+     * @param SplQueue<MiddlewareInterface> $middlewareCollection
+     */
     public function __construct(SplQueue $middlewareCollection)
     {
         $this->middlewareCollection = $middlewareCollection;

@@ -11,6 +11,7 @@ use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\MiddlewareInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 use ReflectionFunction;
+use ReflectionNamedType;
 
 final class CallableMiddleware implements MiddlewareInterface
 {
@@ -31,6 +32,7 @@ final class CallableMiddleware implements MiddlewareInterface
 
     private function assertCallableIsValid(Closure $middleware): void
     {
+        /** @var null|ReflectionNamedType $returnType */
         $returnType = (new ReflectionFunction($middleware))->getReturnType();
         if (null === $returnType || $returnType->getName() !== ResponseInterface::class) {
             throw new InvalidArgumentException('Invalid callable given.');

@@ -15,7 +15,7 @@ use function is_string;
 
 class RequestHandlerFactory
 {
-    private $container;
+    private ContainerInterface $container;
 
     public function __construct(ContainerInterface $container)
     {

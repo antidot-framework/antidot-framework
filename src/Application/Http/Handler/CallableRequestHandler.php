@@ -10,6 +10,7 @@ use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 use ReflectionFunction;
+use ReflectionNamedType;
 
 final class CallableRequestHandler implements RequestHandlerInterface
 {
@@ -30,6 +31,7 @@ final class CallableRequestHandler implements RequestHandlerInterface
 
     private function assertCallableIsValid(Closure $handler): void
     {
+        /** @var null|ReflectionNamedType $returnType */
         $returnType = (new ReflectionFunction($handler))->getReturnType();
         if (null === $returnType || $returnType->getName() !== ResponseInterface::class) {
             throw new InvalidArgumentException('Invalid callable given.');
