@@ -1,5 +1,17 @@
 # Changelog
 
+## [0.1.2](https://github.com/antidot-framework/antidot-framework/tree/HEAD)
+
+[Full Changelog](https://github.com/antidot-framework/antidot-framework/compare/0.1.1...HEAD)
+
+**Merged pull requests:**
+
+- Update phpstan/phpstan requirement from ^0.11.5 to ^0.11.5 || ^0.12.0 [\#11](https://github.com/antidot-framework/antidot-framework/pull/11) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Update symfony/var-dumper requirement from ^4.2 to ^4.2 || ^5.0 [\#10](https://github.com/antidot-framework/antidot-framework/pull/10) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Update laminas/laminas-diactoros requirement from 2.1 to 2.3.1 [\#9](https://github.com/antidot-framework/antidot-framework/pull/9) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Update phpro/grumphp requirement from ^0.17.1 to ^0.17.1 || ^0.19.0 [\#8](https://github.com/antidot-framework/antidot-framework/pull/8) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Update phpunit/phpunit requirement from ^8.0 to ^8.0 || ^9.0 [\#7](https://github.com/antidot-framework/antidot-framework/pull/7) ([dependabot[bot]](https://github.com/apps/dependabot))
+
 ## [0.1.1](https://github.com/antidot-framework/antidot-framework/tree/0.1.1) (2020-06-12)
 
 [Full Changelog](https://github.com/antidot-framework/antidot-framework/compare/0.0.3...0.1.1)
