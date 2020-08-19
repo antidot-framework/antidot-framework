@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace AntidotTest\Container\Config;
+namespace AntidotTest\Container;
 
 use Antidot\Application\Http\Application;
 use Antidot\Application\Http\WebServerApplication;
