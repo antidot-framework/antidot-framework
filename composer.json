@@ -31,7 +31,7 @@
         "phpunit/phpunit": "^8.0 || ^9.0",
         "squizlabs/php_codesniffer": "^3.4",
         "symfony/var-dumper": "^4.2 || ^5.0",
-        "vimeo/psalm": "^3.4"
+        "vimeo/psalm": "^3.14"
     },
     "autoload": {
         "psr-4": {
@@ -47,11 +47,13 @@
         "check-all": [
             "@cs-check",
             "@test",
-            "@inspect"
+            "@inspect",
+            "@psalm"
         ],
         "cs-check": "phpcs src --colors",
         "cs-fix": "phpcbf src --colors",
         "inspect": "phpstan analyse src -l7 --ansi",
+        "psalm": "psalm",
         "test": "phpunit --colors=always"
     },
     "config": {
