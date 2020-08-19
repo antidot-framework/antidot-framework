@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Antidot\Container;
 
 use Antidot\Application\Http\Application;
+use Antidot\Application\Http\Middleware\SyncMiddlewareQueue;
 use Antidot\Application\Http\WebServerApplication;
 use Antidot\Application\Http\Middleware\MiddlewarePipeline;
 use Antidot\Application\Http\Middleware\Pipeline;
@@ -20,7 +21,7 @@ final class ApplicationFactory
 {
     public function __invoke(ContainerInterface $container): Application
     {
-        $pipeline = new MiddlewarePipeline(new SplQueue());
+        $pipeline = new MiddlewarePipeline(new SyncMiddlewareQueue());
         $runner = $this->getRunner($container, $pipeline);
         return new WebServerApplication(
             $runner,

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace AntidotTest\Application\Http\Handler;
 
 use Antidot\Application\Http\Handler\NextHandler;
+use Antidot\Application\Http\Middleware\MiddlewareQueue;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
@@ -13,7 +14,7 @@ use SplQueue;
 
 class NextHandlerTest extends TestCase
 {
-    /** @var SplQueue */
+    /** @var MiddlewareQueue */
     private $pipeline;
     /** @var ServerRequestInterface|\PHPUnit\Framework\MockObject\MockObject */
     private $request;
@@ -38,7 +39,7 @@ class NextHandlerTest extends TestCase
 
     private function havingAPipeline(): void
     {
-        $this->pipeline = new SplQueue();
+        $this->pipeline = $this->createMock(MiddlewareQueue::class);
     }
 
     private function havingNextRequestHandler(): void

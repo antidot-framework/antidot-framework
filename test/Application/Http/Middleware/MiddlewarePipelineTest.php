@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace AntidotTest\Application\Http\Middleware;
 
 use Antidot\Application\Http\Middleware\MiddlewarePipeline;
+use Antidot\Application\Http\Middleware\SyncMiddlewareQueue;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
@@ -29,7 +30,7 @@ class MiddlewarePipelineTest extends TestCase
 
     public function setUp(): void
     {
-        $this->pipelineCollection = new SplQueue();
+        $this->pipelineCollection = new SyncMiddlewareQueue();
         $this->pipeline = new MiddlewarePipeline($this->pipelineCollection);
     }
 

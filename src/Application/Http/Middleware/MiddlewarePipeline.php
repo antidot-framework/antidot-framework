@@ -9,30 +9,24 @@ use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\MiddlewareInterface;
 use Psr\Http\Server\RequestHandlerInterface;
-use SplQueue;
 
 final class MiddlewarePipeline implements Pipeline
 {
-    /** @var SplQueue<MiddlewareInterface>  */
-    private SplQueue $middlewareCollection;
+    private MiddlewareQueue $middlewareQueue;
 
-    /**
-     * @param SplQueue<MiddlewareInterface> $middlewareCollection
-     */
-    public function __construct(SplQueue $middlewareCollection)
+    public function __construct(MiddlewareQueue $middlewareQueue)
     {
-        $this->middlewareCollection = $middlewareCollection;
+        $this->middlewareQueue = $middlewareQueue;
     }
 
     public function pipe(MiddlewareInterface $middleware): void
     {
-        $this->middlewareCollection->enqueue($middleware);
+        $this->middlewareQueue->enqueue($middleware);
     }
 
     public function handle(ServerRequestInterface $request): ResponseInterface
     {
-        /** @var MiddlewareInterface $middleware */
-        $middleware = $this->middlewareCollection->dequeue();
+        $middleware = $this->middlewareQueue->dequeue();
         $next = clone $this;
 
         return $middleware->process($request, $next);
@@ -40,7 +34,7 @@ final class MiddlewarePipeline implements Pipeline
 
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
-        $next = new NextHandler($this->middlewareCollection, $handler);
+        $next = new NextHandler($this->middlewareQueue, $handler);
 
         return $next->handle($request);
     }
