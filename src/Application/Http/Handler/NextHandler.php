@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Antidot\Application\Http\Handler;
 
+use Antidot\Application\Http\Middleware\MiddlewareQueue;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\MiddlewareInterface;
@@ -12,16 +13,10 @@ use SplQueue;
 
 final class NextHandler implements RequestHandlerInterface
 {
-    /**
-     * @var SplQueue<MiddlewareInterface>
-     */
-    private SplQueue $queue;
+    private MiddlewareQueue $queue;
     private RequestHandlerInterface $handler;
 
-    /**
-     * @param SplQueue<MiddlewareInterface> $queue
-     */
-    public function __construct(SplQueue $queue, RequestHandlerInterface $requestHandler)
+    public function __construct(MiddlewareQueue $queue, RequestHandlerInterface $requestHandler)
     {
         $this->queue = $queue;
         $this->handler = $requestHandler;

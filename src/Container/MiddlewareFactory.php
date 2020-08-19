@@ -7,18 +7,22 @@ namespace Antidot\Container;
 use Antidot\Application\Http\Middleware\CallableMiddleware;
 use Antidot\Application\Http\Middleware\LazyLoadingMiddleware;
 use Antidot\Application\Http\Middleware\MiddlewarePipeline;
+use Antidot\Application\Http\Middleware\SyncMiddlewareQueue;
 use Closure;
 use InvalidArgumentException;
 use Psr\Container\ContainerInterface;
 use Psr\Http\Server\MiddlewareInterface;
 use SplQueue;
 
+use function get_class;
 use function is_array;
+use function is_object;
 use function is_string;
 use function sprintf;
 
 class MiddlewareFactory
 {
+    public const INVALID_MIDDLEWARE_MESSAGE = 'Invalid $middlewareName %s given.';
     private ContainerInterface $container;
 
     public function __construct(ContainerInterface $container)
@@ -32,8 +36,6 @@ class MiddlewareFactory
      */
     public function create($middlewareName): MiddlewareInterface
     {
-        $middleware = null;
-
         if (is_string($middlewareName)) {
             return $this->lazyLoadMiddleware($middlewareName);
         }
@@ -43,10 +45,15 @@ class MiddlewareFactory
         }
 
         if ($this->isClosure($middlewareName)) {
+            /** @var Closure $middlewareName */
             return $this->callableMiddleware($middlewareName);
         }
 
-        throw new InvalidArgumentException(sprintf('Invalid $middlewareName %s given.', $middlewareName));
+        /** @var object|int|bool $middlewareName */
+        throw new InvalidArgumentException(sprintf(
+            self::INVALID_MIDDLEWARE_MESSAGE,
+            is_object($middlewareName) ? get_class($middlewareName) : (string) $middlewareName
+        ));
     }
 
     private function callableMiddleware(Closure $middleware): MiddlewareInterface
@@ -60,11 +67,11 @@ class MiddlewareFactory
     }
 
     /**
-     * @param array<string> $middlewareNames
+     * @param array<mixed> $middlewareNames
      */
     private function pipelineMiddleware(array $middlewareNames): MiddlewareInterface
     {
-        $pipeline = new MiddlewarePipeline(new SplQueue());
+        $pipeline = new MiddlewarePipeline(new SyncMiddlewareQueue());
         /** @var string $middlewareName */
         foreach ($middlewareNames as $middlewareName) {
             $pipeline->pipe($this->create($middlewareName));
