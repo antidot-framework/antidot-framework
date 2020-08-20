@@ -14,11 +14,11 @@ class PipedRouteMiddleware implements MiddlewareInterface
 {
     private Pipeline $pipeline;
     private bool $isFail;
-    /** @var array<mixed> */
+    /** @var array<string, mixed> */
     private array $attributes;
 
     /**
-     * @param array<mixed> $attributes
+     * @param array<string, mixed> $attributes
      */
     public function __construct(Pipeline $pipeline, bool $isFail, array $attributes)
     {
@@ -33,6 +33,10 @@ class PipedRouteMiddleware implements MiddlewareInterface
             throw RouteNotFound::withPath($request->getRequestTarget());
         }
 
+        /**
+         * @var string $attribute
+         * @var mixed $value
+         */
         foreach ($this->attributes as $attribute => $value) {
             $request = $request->withAttribute($attribute, $value);
         }
