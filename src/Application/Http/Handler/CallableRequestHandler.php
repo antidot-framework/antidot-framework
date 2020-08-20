@@ -22,10 +22,12 @@ final class CallableRequestHandler implements RequestHandlerInterface
         $this->handler = $handler;
     }
 
+    /** @psalm-suppress MixedInferredReturnType */
     public function handle(ServerRequestInterface $request): ResponseInterface
     {
         $handler = $this->handler;
 
+        /** @psalm-suppress MixedReturnStatement */
         return $handler($request);
     }
 
