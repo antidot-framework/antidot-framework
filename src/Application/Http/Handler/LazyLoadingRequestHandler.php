@@ -24,6 +24,7 @@ final class LazyLoadingRequestHandler implements RequestHandlerInterface
 
     public function handle(ServerRequestInterface $request): ResponseInterface
     {
+        /** @var RequestHandlerInterface $handler */
         $handler = $this->container->get($this->handlerName);
 
         return $handler->handle($request);
