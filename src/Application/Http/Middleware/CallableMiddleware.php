@@ -23,10 +23,12 @@ final class CallableMiddleware implements MiddlewareInterface
         $this->middleware = $middleware;
     }
 
+    /** @psalm-suppress MixedInferredReturnType */
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
         $middleware = $this->middleware;
 
+        /** @psalm-suppress MixedReturnStatement */
         return $middleware($request, $handler);
     }
 
