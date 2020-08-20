@@ -72,7 +72,10 @@ class ErrorMiddleware implements MiddlewareInterface
     {
         if ($this->debug && class_exists(WhoopsRunner::class)) {
             $whoops = new WhoopsRunner();
-            return $whoops->handle($exception, $request);
+
+            /** @var ResponseInterface $response */
+            $response = $whoops::handle($exception, $request);
+            return $response;
         }
 
         return new TextResponse('Unexpected Server Error Occurred', 500);
