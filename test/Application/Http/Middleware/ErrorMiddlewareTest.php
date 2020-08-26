@@ -107,6 +107,6 @@ class ErrorMiddlewareTest extends TestCase
 
     private function thenResponseShouldHaveExpectedErrorStatusCode(): void
     {
-        $this->assertEquals(500, $this->response->getStatusCode());
+        $this->assertSame(500, $this->response->getStatusCode());
     }
 }

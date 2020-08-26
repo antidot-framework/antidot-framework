@@ -36,8 +36,8 @@ class ServerRequestErrorResponseGeneratorTest extends TestCase
 
     private function thenResponseShouldHaveExpectedMessageAndStatusCode(): void
     {
-        $this->assertEquals(500, $this->response->getStatusCode());
-        $this->assertEquals(
+        $this->assertSame(500, $this->response->getStatusCode());
+        $this->assertSame(
             ServerRequestErrorResponseGenerator::ERROR_MESSAGE,
             (string)$this->response->getBody()
         );
