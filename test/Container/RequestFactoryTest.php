@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace AntidotTest\Container\Config;
+namespace AntidotTest\Container;
 
 use Antidot\Container\RequestFactory;
 use PHPUnit\Framework\MockObject\MockObject;
