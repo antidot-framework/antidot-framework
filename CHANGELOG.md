@@ -1,15 +1,43 @@
 # Changelog
 
-## [0.1.2](https://github.com/antidot-framework/antidot-framework/tree/HEAD)
+## [0.1.3](https://github.com/antidot-framework/antidot-framework/tree/0.1.3) (2021-01-10)
 
-[Full Changelog](https://github.com/antidot-framework/antidot-framework/compare/0.1.1...HEAD)
+[Full Changelog](https://github.com/antidot-framework/antidot-framework/compare/0.1.2...0.1.3)
+
+**Implemented enhancements:**
+
+- Add php8 support [\#29](https://github.com/antidot-framework/antidot-framework/pull/29) ([kpicaza](https://github.com/kpicaza))
+
+**Fixed bugs:**
+
+- Improve assertions and namespace [\#21](https://github.com/antidot-framework/antidot-framework/pull/21) ([peter279k](https://github.com/peter279k))
+
+**Closed issues:**
+
+- Remove not needed symfony console dependency in composer  [\#19](https://github.com/antidot-framework/antidot-framework/issues/19)
 
 **Merged pull requests:**
 
+- Update phpro/grumphp requirement from ~0.17 to ~0.17 || ~1.0 [\#26](https://github.com/antidot-framework/antidot-framework/pull/26) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Update laminas/laminas-diactoros requirement from 2.4.0 to 2.4.1 [\#25](https://github.com/antidot-framework/antidot-framework/pull/25) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Update phpro/grumphp requirement from ^0.17.1 || ^0.19.0 || ^0.20.0 || ^0.21.0 to ~0.17 [\#24](https://github.com/antidot-framework/antidot-framework/pull/24) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Update laminas/laminas-diactoros requirement from 2.3.1 to 2.4.0 [\#23](https://github.com/antidot-framework/antidot-framework/pull/23) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Update phpro/grumphp requirement from ^0.17.1 || ^0.19.0 || ^0.20.0 to ^0.17.1 || ^0.19.0 || ^0.20.0 || ^0.21.0 [\#22](https://github.com/antidot-framework/antidot-framework/pull/22) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Issue \#19: remove symfony console as framework dependency [\#20](https://github.com/antidot-framework/antidot-framework/pull/20) ([kpicaza](https://github.com/kpicaza))
+- add psalm to the existing composer checks [\#15](https://github.com/antidot-framework/antidot-framework/pull/15) ([kpicaza](https://github.com/kpicaza))
+- Update phpro/grumphp requirement from ^0.17.1 || ^0.19.0 to ^0.17.1 || ^0.19.0 || ^0.20.0 [\#14](https://github.com/antidot-framework/antidot-framework/pull/14) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Update phpro/grumphp requirement from ^0.17.1 to ^0.17.1 || ^0.19.0 [\#8](https://github.com/antidot-framework/antidot-framework/pull/8) ([dependabot[bot]](https://github.com/apps/dependabot))
+
+## [0.1.2](https://github.com/antidot-framework/antidot-framework/tree/0.1.2) (2020-07-14)
+
+[Full Changelog](https://github.com/antidot-framework/antidot-framework/compare/0.1.1...0.1.2)
+
+**Merged pull requests:**
+
+- Generate changelog for 0.1.2 relese [\#12](https://github.com/antidot-framework/antidot-framework/pull/12) ([kpicaza](https://github.com/kpicaza))
 - Update phpstan/phpstan requirement from ^0.11.5 to ^0.11.5 || ^0.12.0 [\#11](https://github.com/antidot-framework/antidot-framework/pull/11) ([dependabot[bot]](https://github.com/apps/dependabot))
 - Update symfony/var-dumper requirement from ^4.2 to ^4.2 || ^5.0 [\#10](https://github.com/antidot-framework/antidot-framework/pull/10) ([dependabot[bot]](https://github.com/apps/dependabot))
 - Update laminas/laminas-diactoros requirement from 2.1 to 2.3.1 [\#9](https://github.com/antidot-framework/antidot-framework/pull/9) ([dependabot[bot]](https://github.com/apps/dependabot))
-- Update phpro/grumphp requirement from ^0.17.1 to ^0.17.1 || ^0.19.0 [\#8](https://github.com/antidot-framework/antidot-framework/pull/8) ([dependabot[bot]](https://github.com/apps/dependabot))
 - Update phpunit/phpunit requirement from ^8.0 to ^8.0 || ^9.0 [\#7](https://github.com/antidot-framework/antidot-framework/pull/7) ([dependabot[bot]](https://github.com/apps/dependabot))
 
 ## [0.1.1](https://github.com/antidot-framework/antidot-framework/tree/0.1.1) (2020-06-12)
