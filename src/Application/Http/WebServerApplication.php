@@ -42,38 +42,38 @@ class WebServerApplication implements Application
 
     public function get(string $uri, array $middleware, string $name): void
     {
-        $this->route('GET', $uri, $middleware, $name);
+        $this->route($uri, $middleware, ['GET'], $name);
     }
 
     public function post(string $uri, array $middleware, string $name): void
     {
-        $this->route('POST', $uri, $middleware, $name);
+        $this->route($uri, $middleware, ['POST'], $name);
     }
 
     public function patch(string $uri, array $middleware, string $name): void
     {
-        $this->route('PATCH', $uri, $middleware, $name);
+        $this->route($uri, $middleware, ['PATCH'], $name);
     }
 
     public function put(string $uri, array $middleware, string $name): void
     {
-        $this->route('PUT', $uri, $middleware, $name);
+        $this->route($uri, $middleware, ['PUT'], $name);
     }
 
     public function delete(string $uri, array $middleware, string $name): void
     {
-        $this->route('DELETE', $uri, $middleware, $name);
+        $this->route($uri, $middleware, ['DELETE'], $name);
     }
 
     public function options(string $uri, array $middleware, string $name): void
     {
-        $this->route('OPTIONS', $uri, $middleware, $name);
+        $this->route($uri, $middleware, ['OPTIONS'], $name);
     }
 
-    public function route(string $method, string $uri, array $middleware, string $name): void
+    public function route(string $uri, array $middleware, array $methods, string $name): void
     {
         $this->router->append(
-            $this->routeFactory->create([$method], $middleware, $uri, $name)
+            $this->routeFactory->create($methods, $middleware, $uri, $name)
         );
     }
 }

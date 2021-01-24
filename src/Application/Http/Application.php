@@ -43,7 +43,10 @@ interface Application
     public function options(string $uri, array $middleware, string $name): void;
 
     /**
+     * @param string $uri
      * @param array<MiddlewareInterface> $middleware
+     * @param array<string> $methods
+     * @param string $name
      */
-    public function route(string $method, string $uri, array $middleware, string $name): void;
+    public function route(string $uri, array $middleware, array $methods, string $name): void;
 }
