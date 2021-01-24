@@ -25,6 +25,7 @@
     "require-dev": {
         "filp/whoops": "^2.3",
         "franzl/whoops-middleware": "^1.1 || ^2.0",
+        "infection/infection": "^0.20.2",
         "phpro/grumphp": "~0.17 || ~1.0",
         "phpstan/phpstan": "^0.11.5 || ^0.12.0",
         "phpunit/phpunit": "^8.0 || ^9.0",
@@ -47,10 +48,12 @@
             "@cs-check",
             "@test",
             "@inspect",
-            "@psalm"
+            "@psalm",
+            "@infection"
         ],
         "cs-check": "phpcs src --colors",
         "cs-fix": "phpcbf src --colors",
+        "infection": "XDEBUG_MODE=coverage infection",
         "inspect": "phpstan analyse src -l7 --ansi",
         "psalm": "psalm",
         "test": "phpunit --colors=always"
