@@ -1,5 +1,24 @@
 # Changelog
 
+## [0.2.0](https://github.com/antidot-framework/antidot-framework/tree/0.2.0)
+
+[Full Changelog](https://github.com/antidot-framework/antidot-framework/compare/0.1.3...0.2.0)
+
+**Implemented enhancements:**
+
+- BC Break: change application::route definition [\#32](https://github.com/antidot-framework/antidot-framework/pull/32) ([kpicaza](https://github.com/kpicaza))
+- Fix handler is invalid message [\#31](https://github.com/antidot-framework/antidot-framework/pull/31) ([peter279k](https://github.com/peter279k))
+
+**Fixed bugs:**
+
+- Antidot\Application\Http\Application interface should be mixed $middleware [\#30](https://github.com/antidot-framework/antidot-framework/issues/30)
+
+**Merged pull requests:**
+
+- add github actions [\#33](https://github.com/antidot-framework/antidot-framework/pull/33) ([kpicaza](https://github.com/kpicaza))
+- Update franzl/whoops-middleware requirement from ^1.1 to ^1.1 || ^2.0 [\#28](https://github.com/antidot-framework/antidot-framework/pull/28) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Allow passing psalm checks at level 1 [\#17](https://github.com/antidot-framework/antidot-framework/pull/17) ([kpicaza](https://github.com/kpicaza))
+
 ## [0.1.3](https://github.com/antidot-framework/antidot-framework/tree/0.1.3) (2021-01-10)
 
 [Full Changelog](https://github.com/antidot-framework/antidot-framework/compare/0.1.2...0.1.3)
@@ -26,7 +45,6 @@
 - Issue \#19: remove symfony console as framework dependency [\#20](https://github.com/antidot-framework/antidot-framework/pull/20) ([kpicaza](https://github.com/kpicaza))
 - add psalm to the existing composer checks [\#15](https://github.com/antidot-framework/antidot-framework/pull/15) ([kpicaza](https://github.com/kpicaza))
 - Update phpro/grumphp requirement from ^0.17.1 || ^0.19.0 to ^0.17.1 || ^0.19.0 || ^0.20.0 [\#14](https://github.com/antidot-framework/antidot-framework/pull/14) ([dependabot[bot]](https://github.com/apps/dependabot))
-- Update phpro/grumphp requirement from ^0.17.1 to ^0.17.1 || ^0.19.0 [\#8](https://github.com/antidot-framework/antidot-framework/pull/8) ([dependabot[bot]](https://github.com/apps/dependabot))
 
 ## [0.1.2](https://github.com/antidot-framework/antidot-framework/tree/0.1.2) (2020-07-14)
 
@@ -38,6 +56,7 @@
 - Update phpstan/phpstan requirement from ^0.11.5 to ^0.11.5 || ^0.12.0 [\#11](https://github.com/antidot-framework/antidot-framework/pull/11) ([dependabot[bot]](https://github.com/apps/dependabot))
 - Update symfony/var-dumper requirement from ^4.2 to ^4.2 || ^5.0 [\#10](https://github.com/antidot-framework/antidot-framework/pull/10) ([dependabot[bot]](https://github.com/apps/dependabot))
 - Update laminas/laminas-diactoros requirement from 2.1 to 2.3.1 [\#9](https://github.com/antidot-framework/antidot-framework/pull/9) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Update phpro/grumphp requirement from ^0.17.1 to ^0.17.1 || ^0.19.0 [\#8](https://github.com/antidot-framework/antidot-framework/pull/8) ([dependabot[bot]](https://github.com/apps/dependabot))
 - Update phpunit/phpunit requirement from ^8.0 to ^8.0 || ^9.0 [\#7](https://github.com/antidot-framework/antidot-framework/pull/7) ([dependabot[bot]](https://github.com/apps/dependabot))
 
 ## [0.1.1](https://github.com/antidot-framework/antidot-framework/tree/0.1.1) (2020-06-12)
