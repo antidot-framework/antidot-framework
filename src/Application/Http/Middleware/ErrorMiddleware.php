@@ -56,7 +56,7 @@ class ErrorMiddleware implements MiddlewareInterface
             string $errorString,
             string $errorFile,
             int $errorLine,
-            ?array $errorContext
+            ?array $errorContext = null
         ): bool {
             if (!(error_reporting() & $errorNumber)) {
                 // Error is not in mask
