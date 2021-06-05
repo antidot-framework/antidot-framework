@@ -34,7 +34,6 @@ class PipedRouteMiddleware implements MiddlewareInterface
         }
 
         /**
-         * @var string $attribute
          * @var mixed $value
          */
         foreach ($this->attributes as $attribute => $value) {

@@ -27,7 +27,6 @@ class SyncMiddlewareQueue implements MiddlewareQueue
 
     public function dequeue(): MiddlewareInterface
     {
-        /** @var MiddlewareInterface $middleware */
         $middleware = $this->queue->dequeue();
 
         return $middleware;
