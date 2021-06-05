@@ -7,8 +7,11 @@ namespace Antidot\Application\Http;
 use Antidot\Application\Http\Middleware\Pipeline;
 use Antidot\Container\MiddlewareFactory;
 use Laminas\HttpHandlerRunner\RequestHandlerRunner;
+use Psr\Http\Message\ResponseInterface;
+use Psr\Http\Message\ServerRequestInterface;
+use Psr\Http\Server\RequestHandlerInterface;
 
-class WebServerApplication implements Application
+final class WebServerApplication implements Application, RequestHandlerInterface
 {
     protected Pipeline $pipeline;
     protected Router $router;
@@ -33,6 +36,11 @@ class WebServerApplication implements Application
     public function run(): void
     {
         $this->runner->run();
+    }
+
+    public function handle(ServerRequestInterface $request): ResponseInterface
+    {
+        return $this->pipeline->handle($request);
     }
 
     public function pipe(string $middlewareName): void
