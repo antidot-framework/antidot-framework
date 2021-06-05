@@ -51,6 +51,7 @@ class ErrorMiddleware implements MiddlewareInterface
 
     private function setErrorHandler(): void
     {
+        /** @psalm-suppress UnusedClosureParam */
         $handler = static function (
             int $errorNumber,
             string $errorString,

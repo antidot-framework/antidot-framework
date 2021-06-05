@@ -28,7 +28,6 @@ final class NextHandler implements RequestHandlerInterface
             return $this->handler->handle($request);
         }
 
-        /** @var MiddlewareInterface $middleware */
         $middleware = $this->queue->dequeue();
 
         return $middleware->process($request, $this);
