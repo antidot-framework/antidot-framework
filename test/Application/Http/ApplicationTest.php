@@ -15,6 +15,7 @@ use Antidot\Container\MiddlewareFactory;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Psr\Container\ContainerInterface;
+use Psr\Http\Message\ServerRequestInterface;
 use Zend\HttpHandlerRunner\RequestHandlerRunner;
 
 class ApplicationTest extends TestCase
@@ -108,6 +109,13 @@ class ApplicationTest extends TestCase
         $this->havingAConfiguredApplication();
         $this->whenApplicationRuns();
         $this->thenApplicationShouldBeCreated();
+    }
+
+    public function testItShouldHandleRequestsOnAConfiguredApplication(): void
+    {
+        $this->givenARouteData();
+        $this->havingAConfiguredApplication();
+        $this->thenApplicationHandleARequest();
     }
 
     private function givenRequestHandlerRunner(): void
@@ -239,5 +247,14 @@ class ApplicationTest extends TestCase
     private function whenApplicationRuns(): void
     {
         $this->app->run();
+    }
+
+    private function thenApplicationHandleARequest(): void
+    {
+        $request = $this->createMock(ServerRequestInterface::class);
+        $this->pipeline->expects(self::once())
+            ->method('handle')
+            ->with($request);
+        $this->app->handle($request);
     }
 }
