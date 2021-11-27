@@ -15,12 +15,16 @@
     ],
     "require": {
         "php": "^7.4.0|^8.0.0",
-        "psr/container": "^1.0.0",
-        "psr/http-server-middleware": "^1.0",
         "laminas/laminas-config": "^3.2",
-        "laminas/laminas-config-aggregator": "^1.1",
-        "laminas/laminas-diactoros": "^2.4.0",
-        "laminas/laminas-httphandlerrunner": "^1.1"
+        "laminas/laminas-httphandlerrunner": "^2.1",
+        "nikic/fast-route": "^1.3",
+        "nyholm/psr7": "^1.4",
+        "nyholm/psr7-server": "^1.0",
+        "psr/container": "^1.0|^2.0",
+        "psr/http-server-middleware": "^1.0",
+        "react/async": "@dev",
+        "react/http": "^1.5",
+        "symfony/runtime": "^5.3"
     },
     "require-dev": {
         "filp/whoops": "^2.3",
@@ -35,12 +39,12 @@
     },
     "autoload": {
         "psr-4": {
-            "Antidot\\": "src"
+            "Antidot\\Framework\\": "src"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "AntidotTest\\": "test"
+            "Antidot\\Test\\Framework\\": "test"
         }
     },
     "scripts": {
@@ -54,7 +58,7 @@
         "cs-check": "phpcs src --colors",
         "cs-fix": "phpcbf src --colors",
         "infection": "XDEBUG_MODE=coverage infection",
-        "inspect": "phpstan analyse src -l7 --ansi",
+        "inspect": "phpstan analyse src -l8 --ansi",
         "psalm": "psalm",
         "test": "phpunit --colors=always"
     },
@@ -63,7 +67,7 @@
     },
     "extra": {
         "laminas": {
-            "config-provider": "Antidot\\Container\\Config\\ConfigProvider"
+            "config-provider": "Antidot\\Framework\\Config\\ConfigProvider"
         }
     }
 }
