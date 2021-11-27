@@ -334,4 +334,3 @@ final class ApplicationTest extends TestCase
         return $creator->fromGlobals();
     }
 }
-    

@@ -21,7 +21,7 @@ final class AntidotRunner implements RunnerInterface
 {
     public function __construct(
         private Application $application,
-        private bool $debug
+        private RunnerOptions $runnerOptions
     ) {
     }
 
@@ -45,7 +45,7 @@ final class AntidotRunner implements RunnerInterface
         );
 
         $http->on('error', function (Throwable $e): void {
-            if (true === $this->debug) {
+            if (true === $this->runnerOptions->debug) {
                 dump($e);
                 return;
             }
@@ -53,7 +53,10 @@ final class AntidotRunner implements RunnerInterface
             var_export($e);
         });
 
-        $socket = new SocketServer('0.0.0.0:3000');
+        $socket = new SocketServer(
+            sprintf('%s:%d', $this->runnerOptions->host, $this->runnerOptions->port),
+            ['tcp' => ['so_reuseport' => true]]
+        );
         $http->listen($socket);
 
         return 0;
