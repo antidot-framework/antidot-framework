@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Antidot\Framework\Config;
 
+use Antidot\Framework\Cli\ServeCommand;
+use Antidot\Framework\Cli\ServeCommandFactory;
 use Antidot\Framework\Middleware\ErrorMiddleware;
 use Antidot\Framework\Middleware\MiddlewareFactory;
 use Antidot\Framework\Middleware\RouteDispatcherMiddleware;
@@ -21,8 +23,19 @@ class ConfigProvider
     public function __invoke(): array
     {
         return [
+            'console' => [
+                'factories' => [
+                    ServeCommand::class => ServeCommandFactory::class,
+                ],
+                'commands' => [
+                    ServeCommand::NAME => ServeCommand::class,
+                ],
+            ],
+            'server' => [
+                'workers' => 4
+            ],
             'dependencies' => [
-                'invokables' => [
+                'services' => [
                     RouteDispatcherMiddleware::class => RouteDispatcherMiddleware::class,
                     RouteNotFoundMiddleware::class => RouteNotFoundMiddleware::class,
                     ErrorMiddleware::class => ErrorMiddleware::class,

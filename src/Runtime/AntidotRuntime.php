@@ -12,12 +12,14 @@ final class AntidotRuntime extends GenericRuntime
 {
     private int $port;
     private bool $debug;
+    private string $host;
 
     /**
-     * @param array{port: int, debug: bool} $options
+     * @param array{host: string, port: int, debug: bool} $options
      */
     public function __construct(array $options)
     {
+        $this->host = $options['host'];
         $this->port = $options['port'];
         $this->debug = $options['debug'];
         parent::__construct($options);
@@ -26,7 +28,7 @@ final class AntidotRuntime extends GenericRuntime
     public function getRunner(?object $application): RunnerInterface
     {
         if ($application instanceof Application) {
-            return new AntidotRunner($application, $this->debug);
+            return new AntidotRunner($application, new RunnerOptions($this->debug, $this->host, $this->port));
         }
 
         return parent::getRunner($application);
