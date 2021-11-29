@@ -26,7 +26,7 @@ final class ServeCommand extends Command
             ->setDescription('Start running HTTP server');
     }
 
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         for ($worker = 1; $this->workersNumber >= $worker; $worker++) {
             $process = new Process('php public/index.php');
@@ -49,6 +49,6 @@ final class ServeCommand extends Command
 
         Loop::get()->run();
 
-        return 1;
+        return Command::SUCCESS;
     }
 }
