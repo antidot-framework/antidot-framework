@@ -8,10 +8,7 @@ use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\MiddlewareInterface;
 use Psr\Http\Server\RequestHandlerInterface;
-use React\Promise\PromiseInterface;
 use SplQueue;
-use function React\Async\async;
-use function React\Async\await;
 
 final class MiddlewarePipeline implements Pipeline
 {
@@ -40,12 +37,6 @@ final class MiddlewarePipeline implements Pipeline
     {
         $next = new NextHandler($this->middlewareQueue, $handler);
 
-        /** @var PromiseInterface $promise */
-        $promise = async(fn() => $next->handle($request));
-
-        /** @var ResponseInterface $response */
-        $response = await($promise);
-
-        return $response;
+        return $next->handle($request);
     }
 }
