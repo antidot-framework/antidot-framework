@@ -10,7 +10,7 @@ use Psr\Http\Server\RequestHandlerInterface;
 
 use function is_string;
 
-class RequestHandlerFactory
+final class RequestHandlerFactory
 {
     public function __construct(
         private ContainerInterface $container

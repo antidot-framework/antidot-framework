@@ -14,7 +14,7 @@ use Throwable;
 
 use function class_exists;
 
-class ErrorMiddleware implements MiddlewareInterface
+final class ErrorMiddleware implements MiddlewareInterface
 {
     public function __construct(
         private bool $debug = true

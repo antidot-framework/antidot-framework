@@ -21,8 +21,9 @@ use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\MiddlewareInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 use SplQueue;
+use function array_pop;
 
-class FastRouter implements Router
+final class FastRouter implements Router
 {
     private RouteCollector $routeCollector;
 

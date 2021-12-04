@@ -7,7 +7,7 @@ namespace Antidot\Test\Framework\Middleware;
 use Antidot\Framework\Middleware\CallableRequestHandler;
 use PHPUnit\Framework\TestCase;
 
-class CallableRequestHandlerTest extends TestCase
+final class CallableRequestHandlerTest extends TestCase
 {
     public function testItShouldThrowExceptionWithInvalidCallableRequestHandler(): void
     {

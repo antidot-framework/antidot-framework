@@ -23,7 +23,7 @@ use Psr\Http\Server\MiddlewareInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
-class FastRouterTest extends TestCase
+final class FastRouterTest extends TestCase
 {
     public function testItShouldNotFoundRequestUriAndReturnAMiddleware(): void
     {

@@ -9,7 +9,7 @@ use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 
-class LazyLoadingRequestHandlerTest extends TestCase
+final class LazyLoadingRequestHandlerTest extends TestCase
 {
     public function testItShouldHandleRequestAndReturnResponse(): void
     {

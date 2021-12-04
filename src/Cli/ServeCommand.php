@@ -12,7 +12,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 final class ServeCommand extends Command
 {
-    const NAME = 'serve';
+    public const NAME = 'serve';
 
     public function __construct(
         private int $workersNumber
