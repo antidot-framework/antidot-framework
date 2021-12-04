@@ -13,7 +13,7 @@ use SplQueue;
 use function is_array;
 use function is_string;
 
-class MiddlewareFactory
+final class MiddlewareFactory
 {
     public function __construct(
         private ContainerInterface $container

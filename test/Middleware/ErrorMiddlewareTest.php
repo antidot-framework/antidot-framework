@@ -14,7 +14,7 @@ use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 
-class ErrorMiddlewareTest extends TestCase
+final class ErrorMiddlewareTest extends TestCase
 {
     public function testItShouldProcessMiddlewareAndCaptureWhenErrorOcurredWithoutDebugEnabled(): void
     {

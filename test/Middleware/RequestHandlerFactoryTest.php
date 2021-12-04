@@ -10,7 +10,7 @@ use Antidot\Framework\Middleware\RequestHandlerFactory;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Server\RequestHandlerInterface;
 
-class RequestHandlerFactoryTest extends TestCase
+final class RequestHandlerFactoryTest extends TestCase
 {
     public function testItShouldReturnTheRequestHandlerAsIs(): void
     {

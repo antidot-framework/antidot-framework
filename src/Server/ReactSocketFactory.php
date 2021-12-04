@@ -6,6 +6,7 @@ namespace Antidot\Framework\Server;
 
 use Psr\Container\ContainerInterface;
 use React\Socket\SocketServer;
+use function sprintf;
 
 final class ReactSocketFactory
 {

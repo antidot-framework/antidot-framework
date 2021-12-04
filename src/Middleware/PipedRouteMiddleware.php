@@ -9,7 +9,7 @@ use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\MiddlewareInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 
-class PipedRouteMiddleware implements MiddlewareInterface
+final class PipedRouteMiddleware implements MiddlewareInterface
 {
     /**
      * @param array<string, mixed> $attributes

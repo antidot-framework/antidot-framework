@@ -6,7 +6,7 @@ use Psr\Container\ContainerInterface;
 use Antidot\Framework\Middleware\LazyLoadingMiddleware;
 use PHPUnit\Framework\TestCase;
 
-class LazyLoadingMiddlewareTest extends TestCase
+final class LazyLoadingMiddlewareTest extends TestCase
 {
     public function testItShouldThrowExceptionWhenMiddlewareIsNotPresentInContainer(): void
     {
