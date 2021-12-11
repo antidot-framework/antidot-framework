@@ -45,12 +45,12 @@
     },
     "autoload": {
         "psr-4": {
-            "Antidot\\Framework\\": "src"
+            "Antidot\\Framework\\": "src/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Antidot\\Test\\Framework\\": "test"
+            "Antidot\\Test\\Framework\\": "test/"
         }
     },
     "scripts": {
