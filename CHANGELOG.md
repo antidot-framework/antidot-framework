@@ -1,42 +1,48 @@
 # Changelog
 
-## [1.0.0](https://github.com/antidot-framework/antidot-framework/tree/HEAD) (2021-11-28)
+## [2.0.0BETA1](https://github.com/antidot-framework/antidot-framework/tree/2.0.0BETA1)
+
+[Full Changelog](https://github.com/antidot-framework/antidot-framework/compare/1.0.0...2.0.0BETA1)
+
+**Implemented enhancements:**
+
+- Rewrite framework package [\#42](https://github.com/antidot-framework/antidot-framework/pull/42) ([kpicaza](https://github.com/kpicaza))
+
+**Fixed bugs:**
+
+- Fix Autoload issue [\#44](https://github.com/antidot-framework/antidot-framework/pull/44) ([kpicaza](https://github.com/kpicaza))
+
+## [1.0.0](https://github.com/antidot-framework/antidot-framework/tree/1.0.0) (2021-11-28)
 
 [Full Changelog](https://github.com/antidot-framework/antidot-framework/compare/0.2.1...1.0.0)
 
 **Implemented enhancements:**
 
 - become WebServerApplication in a RequestHandlerInterface [\#37](https://github.com/antidot-framework/antidot-framework/pull/37) ([kpicaza](https://github.com/kpicaza))
+- BC Break: change application::route definition [\#32](https://github.com/antidot-framework/antidot-framework/pull/32) ([kpicaza](https://github.com/kpicaza))
+- Fix handler is invalid message [\#31](https://github.com/antidot-framework/antidot-framework/pull/31) ([peter279k](https://github.com/peter279k))
 
 **Fixed bugs:**
 
+- Antidot\Application\Http\Application interface should be mixed $middleware [\#30](https://github.com/antidot-framework/antidot-framework/issues/30)
 - fix error handler parameters [\#36](https://github.com/antidot-framework/antidot-framework/pull/36) ([kpicaza](https://github.com/kpicaza))
+
+**Merged pull requests:**
+
+- fix github actions main branch [\#35](https://github.com/antidot-framework/antidot-framework/pull/35) ([kpicaza](https://github.com/kpicaza))
+- add github actions [\#33](https://github.com/antidot-framework/antidot-framework/pull/33) ([kpicaza](https://github.com/kpicaza))
+- Update franzl/whoops-middleware requirement from ^1.1 to ^1.1 || ^2.0 [\#28](https://github.com/antidot-framework/antidot-framework/pull/28) ([dependabot[bot]](https://github.com/apps/dependabot))
 
 ## [0.2.1](https://github.com/antidot-framework/antidot-framework/tree/0.2.1) (2021-02-04)
 
 [Full Changelog](https://github.com/antidot-framework/antidot-framework/compare/0.2.0...0.2.1)
 
-**Fixed bugs:**
-
-- Antidot\Application\Http\Application interface should be mixed $middleware [\#30](https://github.com/antidot-framework/antidot-framework/issues/30)
-
-**Merged pull requests:**
-
-- fix github actions main branch [\#35](https://github.com/antidot-framework/antidot-framework/pull/35) ([kpicaza](https://github.com/kpicaza))
-
 ## [0.2.0](https://github.com/antidot-framework/antidot-framework/tree/0.2.0) (2021-01-24)
 
 [Full Changelog](https://github.com/antidot-framework/antidot-framework/compare/0.1.3...0.2.0)
 
-**Implemented enhancements:**
-
-- BC Break: change application::route definition [\#32](https://github.com/antidot-framework/antidot-framework/pull/32) ([kpicaza](https://github.com/kpicaza))
-- Fix handler is invalid message [\#31](https://github.com/antidot-framework/antidot-framework/pull/31) ([peter279k](https://github.com/peter279k))
-
 **Merged pull requests:**
 
-- add github actions [\#33](https://github.com/antidot-framework/antidot-framework/pull/33) ([kpicaza](https://github.com/kpicaza))
-- Update franzl/whoops-middleware requirement from ^1.1 to ^1.1 || ^2.0 [\#28](https://github.com/antidot-framework/antidot-framework/pull/28) ([dependabot[bot]](https://github.com/apps/dependabot))
 - Allow passing psalm checks at level 1 [\#17](https://github.com/antidot-framework/antidot-framework/pull/17) ([kpicaza](https://github.com/kpicaza))
 
 ## [0.1.3](https://github.com/antidot-framework/antidot-framework/tree/0.1.3) (2021-01-10)
