@@ -32,7 +32,7 @@
     "require-dev": {
         "filp/whoops": "^2.3",
         "franzl/whoops-middleware": "^1.1 || ^2.0",
-        "infection/infection": "^0.25",
+        "infection/infection": "^0.25 || ^0.26",
         "nyholm/psr7": "^1.4",
         "nyholm/psr7-server": "^1.0",
         "phpro/grumphp": "^1.0",
