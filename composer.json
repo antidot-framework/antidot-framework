@@ -69,7 +69,11 @@
         "test": "phpunit --colors=always"
     },
     "config": {
-        "sort-packages": true
+        "sort-packages": true,
+        "allow-plugins": {
+            "infection/extension-installer": true,
+            "phpro/grumphp": true
+        }
     },
     "extra": {
         "laminas": {
