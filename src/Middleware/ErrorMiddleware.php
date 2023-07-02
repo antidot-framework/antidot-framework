@@ -38,6 +38,27 @@ final class ErrorMiddleware implements MiddlewareInterface
             return $whoops::handle($exception, $request);
         }
 
+        if (true === $this->debug) {
+            $previousExceptions = [];
+            $previous = $exception->getPrevious();
+            while ($previous) {
+                $previousExceptions[] = [
+                    'message' => $previous->getMessage(),
+                    'file' => $previous->getFile(),
+                    'line' => $previous->getLine(),
+                ];
+                $previous = $previous->getPrevious();
+            }
+
+            return new Response(500, ['Content-Type' => 'application/json'], json_encode([
+                'message' => $exception->getMessage(),
+                'file' => $exception->getFile(),
+                'line' => $exception->getLine(),
+                'previous' => $previousExceptions,
+                'trace' => $exception->getTrace(),
+            ]));
+        }
+
         return new Response(500, [], 'Unexpected Server Error Occurred');
     }
 }
