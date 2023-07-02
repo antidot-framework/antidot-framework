@@ -81,6 +81,6 @@
         }
     },
     "suggest": {
-        "filp/whoops": "Pretty error handling for development."
+        "franzl/whoops-middleware": "Pretty error handling for development."
     }
 }
