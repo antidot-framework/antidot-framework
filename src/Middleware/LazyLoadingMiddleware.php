@@ -14,8 +14,8 @@ use Psr\Http\Server\RequestHandlerInterface;
 final class LazyLoadingMiddleware implements MiddlewareInterface
 {
     public function __construct(
-        private ContainerInterface $container,
-        private string $middlewareName
+        private readonly ContainerInterface $container,
+        private readonly string $middlewareName
     ) {
         $this->assertThatContainerHasMiddleware($container, $middlewareName);
     }
@@ -31,7 +31,10 @@ final class LazyLoadingMiddleware implements MiddlewareInterface
     private function assertThatContainerHasMiddleware(ContainerInterface $container, string $middlewareName): void
     {
         if (false === $container->has($middlewareName)) {
-            throw new InvalidArgumentException(sprintf('Invalid middleware name given %s.', $middlewareName));
+            throw new InvalidArgumentException(sprintf(
+                'The Middleware is no available in container: %s.',
+                $middlewareName
+            ));
         }
     }
 }

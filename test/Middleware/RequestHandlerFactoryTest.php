@@ -24,6 +24,15 @@ final class RequestHandlerFactoryTest extends TestCase
     public function testItShouldReturnLazyLoadedRequestHandler(): void
     {
         $container = $this->createMock(ContainerInterface::class);
+        $container
+            ->method('has')
+            ->with('some_handler')
+            ->willReturn(true);
+        $container
+            ->method('get')
+            ->with('some_handler')
+            ->willReturn($this->createMock(RequestHandlerInterface::class));
+
         $factory = new RequestHandlerFactory($container);
         $requestHandler = $factory->create('some_handler');
         self::assertInstanceOf(LazyLoadingRequestHandler::class, $requestHandler);

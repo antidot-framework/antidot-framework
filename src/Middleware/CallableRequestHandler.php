@@ -15,7 +15,7 @@ use ReflectionNamedType;
 final class CallableRequestHandler implements RequestHandlerInterface
 {
     public function __construct(
-        private Closure $handler
+        private readonly Closure $handler
     ) {
         $this->assertCallableIsValid($handler);
     }
@@ -34,7 +34,10 @@ final class CallableRequestHandler implements RequestHandlerInterface
         /** @var null|ReflectionNamedType $returnType */
         $returnType = (new ReflectionFunction($handler))->getReturnType();
         if (null === $returnType || $returnType->getName() !== ResponseInterface::class) {
-            throw new InvalidArgumentException('Invalid callable given.');
+            throw new InvalidArgumentException(sprintf(
+                'Invalid callable given. It must return an instance of %s class.',
+                ResponseInterface::class
+            ));
         }
     }
 }

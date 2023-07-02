@@ -32,7 +32,7 @@ final class ServeCommand extends Command
             $process = new Process('php public/index.php');
 
             $process->start();
-            $output->writeLn('php public/index.php ' . $worker);
+            $output->writeLn('<fg=blue>php</> public/index.php <fg=blue>' . $worker . '</>');
 
             if (null === $process->stdout) {
                 throw new \RuntimeException();

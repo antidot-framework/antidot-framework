@@ -13,7 +13,7 @@ use function is_string;
 final class RequestHandlerFactory
 {
     public function __construct(
-        private ContainerInterface $container
+        private readonly ContainerInterface $container
     ) {
     }
 

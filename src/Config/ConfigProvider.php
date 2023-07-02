@@ -14,9 +14,11 @@ use Antidot\Framework\Middleware\RouteNotFoundMiddleware;
 use Antidot\Framework\Router\Router;
 use Antidot\Framework\Server\ReactServerFactory;
 use Antidot\Framework\Server\ReactSocketFactory;
+use Antidot\Framework\Server\StdOutLoggerFactory;
 use Nyholm\Psr7\Factory\Psr17Factory;
 use Psr\Http\Message\RequestFactoryInterface;
 use Psr\Http\Message\ResponseFactoryInterface;
+use Psr\Log\LoggerInterface;
 use React\Http\HttpServer;
 use React\Socket\SocketServer;
 
@@ -41,6 +43,7 @@ class ConfigProvider
                 'host' => '0.0.0.0',
                 'port' => 3000,
             ],
+            'log_level' => 'WARNING',
             'dependencies' => [
                 'invokables' => [
                     RouteDispatcherMiddleware::class => RouteDispatcherMiddleware::class,
@@ -51,6 +54,7 @@ class ConfigProvider
                 ],
                 'factories' => [
                     Application::class => ApplicationFactory::class,
+                    LoggerInterface::class => StdOutLoggerFactory::class,
                     Router::class => FastRouterFactory::class,
                     MiddlewareFactory::class => MiddlewareFactoryFactory::class,
                     HttpServer::class => ReactServerFactory::class,

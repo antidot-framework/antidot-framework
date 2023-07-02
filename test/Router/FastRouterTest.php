@@ -60,6 +60,13 @@ final class FastRouterTest extends TestCase
     public function testItShouldMatchExistingRouteMiddleware(): void
     {
         $container = $this->createMock(ContainerInterface::class);
+        $container->expects($this->atLeastOnce())
+            ->method('has')
+            ->withConsecutive(
+                ['some_middleware'],
+                ['other_middleware'],
+            )
+            ->willReturnOnConsecutiveCalls(true, true);
         $router = new FastRouter(
             new MiddlewareFactory($container),
             new RequestHandlerFactory($container)

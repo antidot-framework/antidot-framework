@@ -15,8 +15,8 @@ final class PipedRouteMiddleware implements MiddlewareInterface
      * @param array<string, mixed> $attributes
      */
     public function __construct(
-        private Pipeline $pipeline,
-        private array $attributes
+        private readonly Pipeline $pipeline,
+        private readonly array $attributes
     ) {
     }
 
