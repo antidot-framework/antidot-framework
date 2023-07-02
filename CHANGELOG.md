@@ -1,6 +1,17 @@
 # Changelog
 
-## [2.0.0BETA1](https://github.com/antidot-framework/antidot-framework/tree/2.0.0BETA1)
+## [2.0.0](https://github.com/antidot-framework/antidot-framework/tree/2.0.0) (2023-07-02)
+
+[Full Changelog](https://github.com/antidot-framework/antidot-framework/compare/2.0.0BETA1...2.0.0)
+
+**Implemented enhancements:**
+
+- PHP 8.1 support [\#39](https://github.com/antidot-framework/antidot-framework/issues/39)
+- Prepare mutation testing analysis [\#18](https://github.com/antidot-framework/antidot-framework/issues/18)
+- Allow passing psalm at level 1 [\#16](https://github.com/antidot-framework/antidot-framework/issues/16)
+- Update framework to use php 8.1 and greatest [\#48](https://github.com/antidot-framework/antidot-framework/pull/48) ([kpicaza](https://github.com/kpicaza))
+
+## [2.0.0BETA1](https://github.com/antidot-framework/antidot-framework/tree/2.0.0BETA1) (2021-12-12)
 
 [Full Changelog](https://github.com/antidot-framework/antidot-framework/compare/1.0.0...2.0.0BETA1)
 
@@ -37,12 +48,28 @@
 
 [Full Changelog](https://github.com/antidot-framework/antidot-framework/compare/0.2.0...0.2.1)
 
+**Fixed bugs:**
+
+- Antidot\Application\Http\Application interface should be mixed $middleware [\#30](https://github.com/antidot-framework/antidot-framework/issues/30)
+- fix error handler parameters [\#36](https://github.com/antidot-framework/antidot-framework/pull/36) ([kpicaza](https://github.com/kpicaza))
+
+**Merged pull requests:**
+
+- fix github actions main branch [\#35](https://github.com/antidot-framework/antidot-framework/pull/35) ([kpicaza](https://github.com/kpicaza))
+
 ## [0.2.0](https://github.com/antidot-framework/antidot-framework/tree/0.2.0) (2021-01-24)
 
 [Full Changelog](https://github.com/antidot-framework/antidot-framework/compare/0.1.3...0.2.0)
 
+**Implemented enhancements:**
+
+- BC Break: change application::route definition [\#32](https://github.com/antidot-framework/antidot-framework/pull/32) ([kpicaza](https://github.com/kpicaza))
+- Fix handler is invalid message [\#31](https://github.com/antidot-framework/antidot-framework/pull/31) ([peter279k](https://github.com/peter279k))
+
 **Merged pull requests:**
 
+- add github actions [\#33](https://github.com/antidot-framework/antidot-framework/pull/33) ([kpicaza](https://github.com/kpicaza))
+- Update franzl/whoops-middleware requirement from ^1.1 to ^1.1 || ^2.0 [\#28](https://github.com/antidot-framework/antidot-framework/pull/28) ([dependabot[bot]](https://github.com/apps/dependabot))
 - Allow passing psalm checks at level 1 [\#17](https://github.com/antidot-framework/antidot-framework/pull/17) ([kpicaza](https://github.com/kpicaza))
 
 ## [0.1.3](https://github.com/antidot-framework/antidot-framework/tree/0.1.3) (2021-01-10)
