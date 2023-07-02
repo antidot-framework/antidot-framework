@@ -41,6 +41,10 @@ final class ApplicationTest extends TestCase
     public function testItShouldHandleHttpRequest(): void
     {
         $this->container
+            ->method('has')
+            ->with('some_middleware')
+            ->willReturn(true);
+        $this->container
             ->method('get')
             ->with('some_middleware')
             ->willReturn($this->createMock(MiddlewareInterface::class));
@@ -54,10 +58,7 @@ final class ApplicationTest extends TestCase
 
     public function testItShouldHandlePostRequest(): void
     {
-        $this->container
-            ->method('get')
-            ->with(RouteDispatcherMiddleware::class)
-            ->willReturn(new RouteDispatcherMiddleware($this->router));
+        $this->setUpRouter();
         $request = $this->getRequest();
         $request = $request->withMethod('POST');
         $request = $request->withUri(new Uri('/'));
@@ -81,10 +82,7 @@ final class ApplicationTest extends TestCase
 
     public function testItShouldHandleRequestAndReturnRouteNotFoundResponse(): void
     {
-        $this->container
-            ->method('get')
-            ->with(RouteDispatcherMiddleware::class)
-            ->willReturn(new RouteDispatcherMiddleware($this->router));
+        $this->setUpRouter();
         $request = $this->getRequest();
         $request = $request->withMethod('POST');
         $request = $request->withUri(new Uri('/'));
@@ -102,10 +100,7 @@ final class ApplicationTest extends TestCase
 
     public function testItShouldHandleRequestAndReturnMethodNotAllowedResponse(): void
     {
-        $this->container
-            ->method('get')
-            ->with(RouteDispatcherMiddleware::class)
-            ->willReturn(new RouteDispatcherMiddleware($this->router));
+        $this->setUpRouter();
         $request = $this->getRequest();
         $request = $request->withMethod('POST');
         $request = $request->withUri(new Uri('/'));
@@ -128,10 +123,7 @@ final class ApplicationTest extends TestCase
 
     public function testItShouldHandleGetRequest(): void
     {
-        $this->container
-            ->method('get')
-            ->with(RouteDispatcherMiddleware::class)
-            ->willReturn(new RouteDispatcherMiddleware($this->router));
+        $this->setUpRouter();
         $request = $this->getRequest();
         $request = $request->withMethod('GET');
         $request = $request->withUri(new Uri('/'));
@@ -155,10 +147,7 @@ final class ApplicationTest extends TestCase
 
     public function testItShouldHandlePatchRequest(): void
     {
-        $this->container
-            ->method('get')
-            ->with(RouteDispatcherMiddleware::class)
-            ->willReturn(new RouteDispatcherMiddleware($this->router));
+        $this->setUpRouter();
         $request = $this->getRequest();
         $request = $request->withMethod('PATCH');
         $request = $request->withUri(new Uri('/'));
@@ -182,10 +171,7 @@ final class ApplicationTest extends TestCase
 
     public function testItShouldHandlePutRequest(): void
     {
-        $this->container
-            ->method('get')
-            ->with(RouteDispatcherMiddleware::class)
-            ->willReturn(new RouteDispatcherMiddleware($this->router));
+        $this->setUpRouter();
         $request = $this->getRequest();
         $request = $request->withMethod('PUT');
         $request = $request->withUri(new Uri('/'));
@@ -209,10 +195,7 @@ final class ApplicationTest extends TestCase
 
     public function testItShouldHandleDeleteRequest(): void
     {
-        $this->container
-            ->method('get')
-            ->with(RouteDispatcherMiddleware::class)
-            ->willReturn(new RouteDispatcherMiddleware($this->router));
+        $this->setUpRouter();
         $request = $this->getRequest();
         $request = $request->withMethod('DELETE');
         $request = $request->withUri(new Uri('/'));
@@ -259,10 +242,7 @@ final class ApplicationTest extends TestCase
 
     public function testItShouldHandleOptionsRequest(): void
     {
-        $this->container
-            ->method('get')
-            ->with(RouteDispatcherMiddleware::class)
-            ->willReturn(new RouteDispatcherMiddleware($this->router));
+        $this->setUpRouter();
         $request = $this->getRequest();
         $request = $request->withMethod('OPTIONS');
         $request = $request->withUri(new Uri('/hello/koldo'));
@@ -286,10 +266,7 @@ final class ApplicationTest extends TestCase
 
     public function testItShouldHandleRoutedRequest(): void
     {
-        $this->container
-            ->method('get')
-            ->with(RouteDispatcherMiddleware::class)
-            ->willReturn(new RouteDispatcherMiddleware($this->router));
+        $this->setUpRouter();
         $request = $this->getRequest();
         $request = $request->withMethod('OPTIONS');
         $request = $request->withUri(new Uri('/hello/koldo'));
@@ -332,5 +309,17 @@ final class ApplicationTest extends TestCase
         );
 
         return $creator->fromGlobals();
+    }
+
+    private function setUpRouter(): void
+    {
+        $this->container
+            ->method('has')
+            ->with(RouteDispatcherMiddleware::class)
+            ->willReturn(true);
+        $this->container
+            ->method('get')
+            ->with(RouteDispatcherMiddleware::class)
+            ->willReturn(new RouteDispatcherMiddleware($this->router));
     }
 }

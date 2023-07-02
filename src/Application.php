@@ -23,12 +23,14 @@ final class Application implements RequestHandlerInterface
 
     /**
      * @param array<string> $middlewares
+     * @param array<MiddlewareInterface> $middlewareCache
      */
     public function __construct(
-        private MiddlewareFactory $middlewareFactory,
-        private RouteFactory $routeFactory,
+        private readonly MiddlewareFactory $middlewareFactory,
+        private readonly RouteFactory $routeFactory,
         private Router $router,
         private array $middlewares = [],
+        private array $middlewareCache = [],
     ) {
     }
 
@@ -37,10 +39,18 @@ final class Application implements RequestHandlerInterface
         /** @var SplQueue<MiddlewareInterface> $queue */
         $queue = new SplQueue();
         $pipeline = new MiddlewarePipeline($queue);
-        array_map(
-            fn(string $middlewareName) => $pipeline->pipe($this->middlewareFactory->create($middlewareName)),
-            $this->middlewares
-        );
+        if ([] !== $this->middlewareCache) {
+            foreach ($this->middlewareCache as $middleware) {
+                $pipeline->pipe($middleware);
+            }
+            return $pipeline->handle($request);
+        }
+
+        foreach ($this->middlewares as $middleware) {
+            $middleware = $this->middlewareFactory->create($middleware);
+            $this->middlewareCache[] = $middleware;
+            $pipeline->pipe($middleware);
+        }
 
         return $pipeline->handle($request);
     }

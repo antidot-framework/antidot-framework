@@ -17,7 +17,7 @@ use function class_exists;
 final class ErrorMiddleware implements MiddlewareInterface
 {
     public function __construct(
-        private bool $debug = true
+        private readonly bool $debug = true
     ) {
     }
 

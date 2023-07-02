@@ -18,14 +18,10 @@ final class Route
      * >  $pipeline
      */
     public function __construct(
-        /** @psalm-immutable $method */
-        public array $method,
-        /** @psalm-immutable $name */
-        public string $name,
-        /** @psalm-immutable $path */
-        public string $path,
-        /** @psalm-immutable $pipeline */
-        public array $pipeline
+        public readonly array $method,
+        public readonly string $name,
+        public readonly string $path,
+        public readonly array $pipeline
     ) {
     }
 }

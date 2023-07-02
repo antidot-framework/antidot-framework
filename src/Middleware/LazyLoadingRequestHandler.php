@@ -13,8 +13,8 @@ use Psr\Http\Server\RequestHandlerInterface;
 final class LazyLoadingRequestHandler implements RequestHandlerInterface
 {
     public function __construct(
-        private ContainerInterface $container,
-        private string $handlerName
+        private readonly ContainerInterface $container,
+        private readonly string $handlerName
     ) {
         $this->assertThatContainerHasHandler($container, $handlerName);
     }
@@ -30,7 +30,10 @@ final class LazyLoadingRequestHandler implements RequestHandlerInterface
     private function assertThatContainerHasHandler(ContainerInterface $container, string $handlerName): void
     {
         if (false === $container->has($handlerName)) {
-            throw new InvalidArgumentException(sprintf('Invalid handler name given %s.', $handlerName));
+            throw new InvalidArgumentException(sprintf(
+                'The Request Handler is no available in container: %s.',
+                $handlerName
+            ));
         }
     }
 }

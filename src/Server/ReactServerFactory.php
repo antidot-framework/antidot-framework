@@ -23,10 +23,12 @@ final class ReactServerFactory
         $globalConfig = $container->get('config');
 
         $http = new HttpServer(
-            function (ServerRequestInterface $request) use ($application): PromiseInterface {
+            static function (ServerRequestInterface $request) use ($application): PromiseInterface {
                 $_SERVER['X-Application'] = 'antidot-react-http';
 
-                return async(static fn(): ResponseInterface => $application->handle($request));
+                return async(
+                    static fn(): ResponseInterface => $application->handle($request)
+                )();
             }
         );
 

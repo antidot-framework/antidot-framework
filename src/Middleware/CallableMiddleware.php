@@ -35,7 +35,10 @@ final class CallableMiddleware implements MiddlewareInterface
         /** @var null|ReflectionNamedType $returnType */
         $returnType = (new ReflectionFunction($middleware))->getReturnType();
         if (null === $returnType || $returnType->getName() !== ResponseInterface::class) {
-            throw new InvalidArgumentException('Invalid callable given.');
+            throw new InvalidArgumentException(sprintf(
+                'Invalid callable given. It must return an instance of %s class.',
+                ResponseInterface::class
+            ));
         }
     }
 }

@@ -17,7 +17,7 @@ final class NextHandler implements RequestHandlerInterface
      */
     public function __construct(
         private SplQueue $queue,
-        private RequestHandlerInterface $handler
+        private readonly RequestHandlerInterface $handler
     ) {
     }
 

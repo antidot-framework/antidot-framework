@@ -28,7 +28,7 @@ final class MiddlewarePipeline implements Pipeline
     public function handle(ServerRequestInterface $request): ResponseInterface
     {
         $middleware = $this->middlewareQueue->dequeue();
-        $next = clone $this;
+        $next = new self($this->middlewareQueue);
 
         return $middleware->process($request, $next);
     }

@@ -25,11 +25,13 @@ use function array_pop;
 
 final class FastRouter implements Router
 {
-    private RouteCollector $routeCollector;
+    private readonly RouteCollector $routeCollector;
 
+    /** @param array<string, array<MiddlewareInterface>> $routeCache */
     public function __construct(
-        private MiddlewareFactory $middlewareFactory,
-        private RequestHandlerFactory $requestHandlerFactory,
+        private readonly MiddlewareFactory $middlewareFactory,
+        private readonly RequestHandlerFactory $requestHandlerFactory,
+        private array $routeCache = []
     ) {
         $this->routeCollector = new RouteCollector(new Std(), new GroupCountBased());
     }
@@ -48,9 +50,10 @@ final class FastRouter implements Router
             case Dispatcher::NOT_FOUND:
                 return new RouteNotFoundMiddleware();
             case Dispatcher::FOUND:
+                $routeId = sprintf('%s_%s', $request->getMethod(), $request->getUri()->getPath());
                 /** @var array<array-key, Closure|MiddlewareInterface|string>  $pipes */
                 $pipes = $routeInfo[1];
-                $pipeline = $this->getPipeline($pipes);
+                $pipeline = $this->getPipeline($routeId, $pipes);
                 /** @var array<string, mixed> $attributes */
                 $attributes = $routeInfo[2];
                 return new PipedRouteMiddleware($pipeline, $attributes);
@@ -63,21 +66,31 @@ final class FastRouter implements Router
      * @param array<MiddlewareInterface|(callable():ResponseInterface)|string|string> $pipes
      * @return MiddlewarePipeline
      */
-    private function getPipeline(array $pipes): MiddlewarePipeline
+    private function getPipeline(string $routeId, array $pipes): MiddlewarePipeline
     {
         /** @var SplQueue<MiddlewareInterface> $queue */
         $queue = new SplQueue();
         $pipeline = new MiddlewarePipeline($queue);
+
+        if (array_key_exists($routeId, $this->routeCache)) {
+            foreach ($this->routeCache[$routeId] as $middleware) {
+                $pipeline->pipe($middleware);
+            }
+            return $pipeline;
+        }
+
         $middlewarePipeline = $pipes;
         /** @var RequestHandlerInterface $handler */
         $handler = array_pop($middlewarePipeline);
 
         foreach ($middlewarePipeline as $middleware) {
-            $pipeline->pipe($this->middlewareFactory->create($middleware));
+            $middleware = $this->middlewareFactory->create($middleware);
+            $this->routeCache[$routeId][] = $middleware;
+            $pipeline->pipe($middleware);
         }
 
         $requestHandlerFactory = $this->requestHandlerFactory;
-        $pipeline->pipe(new CallableMiddleware(
+        $requestHandler = new CallableMiddleware(
             static function (ServerRequestInterface $request) use (
                 $handler,
                 $requestHandlerFactory
@@ -86,7 +99,9 @@ final class FastRouter implements Router
 
                 return $handler->handle($request);
             }
-        ));
+        );
+        $this->routeCache[$routeId][] = $requestHandler;
+        $pipeline->pipe($requestHandler);
 
         return $pipeline;
     }
