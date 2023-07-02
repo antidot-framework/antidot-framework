@@ -79,5 +79,8 @@
         "laminas": {
             "config-provider": "Antidot\\Framework\\Config\\ConfigProvider"
         }
+    },
+    "suggest": {
+        "filp/whoops": "Pretty error handling for development."
     }
 }
