@@ -32,7 +32,7 @@ final class ErrorMiddleware implements MiddlewareInterface
 
     private function getErrorResponse(Throwable $exception, ServerRequestInterface $request): ResponseInterface
     {
-        if ($this->debug && class_exists(WhoopsRunner::class)) {
+        if (true === $this->debug && class_exists(\Whoops\Run::class)) {
             $whoops = new WhoopsRunner();
 
             return $whoops::handle($exception, $request);
